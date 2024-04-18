@@ -1,4 +1,4 @@
-import React, { useState, useEffect } from 'react';
+import React, { useState, useEffect, useCallback } from 'react';
 import ColorThief from 'colorthief';
 import './App.css';
 import quotes from './quotes.json';
@@ -14,6 +14,19 @@ function App() {
     if (isQuoteEmpty(quote)) {
       fetchQuote();
     }
+
+    // 添加键盘事件监听器
+    const handleKeyDown = (event) => {
+      if (event.code === 'Space') {
+        fetchQuote();
+      }
+    };
+    window.addEventListener('keydown', handleKeyDown);
+
+    // 移除键盘事件监听器
+    return () => {
+      window.removeEventListener('keydown', handleKeyDown);
+    };
   }, []);
 
   useEffect(() => {
@@ -27,7 +40,7 @@ function App() {
     return Object.keys(quote).length === 0;
   };
 
-  const fetchQuote = () => {
+  const fetchQuote = useCallback(() => {
     if (quoteStack.length === 0) {
       setQuoteStack([...quotes]);
     }
@@ -52,7 +65,7 @@ function App() {
       const textColorValue = brightness > 125 ? 'black' : 'white';
       setTextColor(textColorValue);
     };
-  };
+  }, [quoteStack]);
 
   return (
     <div
