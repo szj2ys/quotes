@@ -16,6 +16,7 @@ h1 {
   font-size: 48px; /* Base font size for h1 */
   max-width: 70%;
   text-shadow: 2px 2px 4px rgba(0, 0, 0, 0.5);
+  text-align: center;
   line-height: 1.6;
 }
 
@@ -32,6 +33,7 @@ p {
   h1 {
     font-size: 46px; /* Smaller font size for h1 on medium screens */
     max-width: 75%;
+    text-align: center;
   }
   p {
     font-size: 26px; /* Smaller font size for p on medium screens */
@@ -46,6 +48,7 @@ p {
   h1 {
     font-size: 33px; /* Smaller font size for h1 on small screens */
     max-width: 90%;
+    text-align: center;
   }
   p {
     font-size: 24px; /* Smaller font size for p on small screens */
@@ -57,6 +60,7 @@ p {
   h1 {
     font-size: 32px; /* Even smaller font size for h1 on very small screens */
     max-width: 90%;
+    text-align: center;
   }
   p {
     font-size: 23px; /* Even smaller font size for p on very small screens */
