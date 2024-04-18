@@ -44,22 +44,22 @@ p {
     font-size: 18px; /* Smaller font size for base text on small screens */
   }
   h1 {
-    font-size: 35px; /* Smaller font size for h1 on small screens */
-    max-width: 88%;
+    font-size: 33px; /* Smaller font size for h1 on small screens */
+    max-width: 90%;
   }
   p {
-    font-size: 23px; /* Smaller font size for p on small screens */
+    font-size: 24px; /* Smaller font size for p on small screens */
     margin-right: 88px;
   }
 }
 
 @media (max-width: 480px) {
   h1 {
-    font-size: 34px; /* Even smaller font size for h1 on very small screens */
-    max-width: 88%;
+    font-size: 32px; /* Even smaller font size for h1 on very small screens */
+    max-width: 90%;
   }
   p {
-    font-size: 22px; /* Even smaller font size for p on very small screens */
+    font-size: 23px; /* Even smaller font size for p on very small screens */
     margin-right: 87px;
   }
 }
