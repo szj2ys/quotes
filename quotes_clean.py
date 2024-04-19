@@ -1,4 +1,4 @@
-import json
+import json, string
 from pathlib import Path
 from datetime import datetime
 
@@ -21,6 +21,18 @@ class TextCleaner:
         with self.input_file.open(encoding='utf-8') as file:
             return json.load(file)
 
+    def check_end_punctuation(self, text):
+        """检查是否以标点结尾"""
+        chinese_period = ['。', '！']
+
+        # 判断是否以标点符号结尾
+        if text and (
+                text[-1] not in string.punctuation and (
+                text[-1] not in chinese_period)):
+            return text + '。'
+        else:
+            return text
+
     def _clean_quote(self, quote):
         """
         清洗单个quote字段的文本：替换逗号。
@@ -28,7 +40,8 @@ class TextCleaner:
         :param quote: 原始quote文本。
         :return: 清洗后的quote文本。
         """
-        return quote.replace(',', '，').replace('.', '。').replace('?', '？')
+        quote = quote.replace(',', '，').replace('.', '。').replace('?', '？').replace('!', '！').replace(':', '：').replace('"', '”')
+        return self.check_end_punctuation(quote.strip())
 
     def _update_author(self, author):
         """
