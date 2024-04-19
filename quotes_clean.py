@@ -1,4 +1,6 @@
 import json
+from pathlib import Path
+from datetime import datetime
 
 class TextCleaner:
     def __init__(self, input_file_path):
@@ -7,7 +9,7 @@ class TextCleaner:
 
         :param input_file_path: 输入的JSON文件的路径。
         """
-        self.input_file_path = input_file_path
+        self.input_file = Path(input_file_path)
         self.data = self._load_data()
 
     def _load_data(self):
@@ -16,7 +18,7 @@ class TextCleaner:
 
         :return: 解析JSON后的数据。
         """
-        with open(self.input_file_path, 'r', encoding='utf-8') as file:
+        with self.input_file.open(encoding='utf-8') as file:
             return json.load(file)
 
     def _clean_quote(self, quote):
@@ -55,18 +57,18 @@ class TextCleaner:
 
         self.data = cleaned_data
 
-    def save_data(self, output_file_path):
+    def save_data(self):
         """
         将清洗后的数据保存到新的文件中。
-
-        :param output_file_path: 输出的JSON文件的路径。
         """
-        with open(output_file_path, 'w', encoding='utf-8') as file:
+        output_file = self.input_file.parent / f'quotes.json'
+        self.input_file.rename(self.input_file.parent / f'quotes_bak_{datetime.now().strftime("%Y%m%d%H%M")}.json')
+        print(f'总共有{len(self.data)}条数据...')
+        with output_file.open('w', encoding='utf-8') as file:
             json.dump(self.data, file, ensure_ascii=False, indent=4)
 
-
-# 使用示例
 if __name__ == "__main__":
-    cleaner = TextCleaner('quotes.json')  # 输入文件名
+    cleaner = TextCleaner('src/assets/quotes.json')  # 输入文件名
     cleaner.clean_data()
-    cleaner.save_data('quotes_cleaned.json')  # 输出文件名
+    cleaner.save_data()
+    print('Well done!')

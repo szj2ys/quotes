@@ -1,7 +1,7 @@
 import React, { useState, useEffect, useCallback } from 'react';
 import ColorThief from 'colorthief';
 import './App.css';
-import quotes from './quotes.json';
+import quotes from './assets/quotes.json';
 
 function App() {
   const [quote, setQuote] = useState({});
