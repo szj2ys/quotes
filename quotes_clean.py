@@ -40,7 +40,7 @@ class TextCleaner:
         :param quote: 原始quote文本。
         :return: 清洗后的quote文本。
         """
-        quote = quote.replace(',', '，').replace('.', '。').replace('?', '？').replace('!', '！').replace(':', '：').replace('"', '”')
+        quote = quote.replace(',', '，').replace('.', '。').replace(';', '；').replace('?', '？').replace('!', '！').replace(':', '：').replace('"', '”').replace('……', '。')
         return self.check_end_punctuation(quote.strip())
 
     def _update_author(self, author):
@@ -50,7 +50,8 @@ class TextCleaner:
         :param author: 原始author文本。
         :return: 更新后的author文本。
         """
-        return '佚名' if not author else author
+        author = '佚名' if not author else author
+        return author.replace('・', '·').replace('•', '·').strip()
 
     def clean_data(self):
         """

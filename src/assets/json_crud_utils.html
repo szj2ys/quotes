@@ -1,0 +1,165 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <meta charset="UTF-8">
+    <title>JSON 文件操作</title>
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+            max-width: 90%;
+            margin: 0 auto;
+            padding: 20px;
+        }
+
+        textarea {
+            width: 100%;
+            height: 150px;
+            font-family: monospace;
+        }
+
+        .quote-input {
+            width: 100%;
+            height: 100px;
+            white-space: pre-wrap !important; /* 保留空格和换行符 */
+            word-wrap: break-word !important; /* 自动换行 */
+        }
+        .author-input {
+            width: 50%;
+            box-sizing: border-box;
+        }
+    </style>
+</head>
+<body>
+<h1>JSON 文件操作</h1>
+<input type="file" id="fileInput" accept=".json">
+<textarea id="json-data" readonly></textarea>
+<br>
+<button onclick="saveData()">保存数据</button>
+<br><br>
+<label for="quote-input">名言:</label>
+<input type="text" id="quote-input" class="quote-input">
+<label for="author-input">作者:</label>
+<input type="text" id="author-input" class="author-input">
+<button onclick="addQuote()">添加</button>
+<button onclick="updateQuote()">修改</button>
+<button onclick="bulkDelete()">批量删除</button>
+<button onclick="undoDelete()">撤销删除</button>
+<br><br>
+<div id="quote-list"></div>
+
+<script>
+    let data = [];
+    let deletedQuotes = []; // 存储已删除的名言
+    let selectedFile; // 声明一个变量来保存文件引用
+    let isDataModified = false; // 标记数据是否被修改
+
+    const fileInput = document.getElementById('fileInput');
+    const jsonData = document.getElementById('json-data');
+    const quoteList = document.getElementById('quote-list');
+
+    fileInput.addEventListener('change', () => {
+        const file = fileInput.files[0];
+        selectedFile = file; // 保存文件引用
+        const reader = new FileReader();
+
+        reader.onload = () => {
+            try {
+                data = JSON.parse(reader.result);
+                renderQuotes();
+                jsonData.value = JSON.stringify(data, null, 2);
+                isDataModified = false; // 重置修改标记
+            } catch (e) {
+                quoteList.textContent = '无效的 JSON 数据';
+            }
+        };
+
+        reader.readAsText(file);
+    });
+
+    function saveData() {
+        if (!selectedFile) {
+            alert('请先选择一个文件');
+            return;
+        }
+
+        const dataStr = JSON.stringify(data, null, 2);
+        const blob = new Blob([dataStr], {type: 'application/json'});
+        const url = URL.createObjectURL(blob);
+        const a = document.createElement('a');
+        a.href = url;
+        a.download = selectedFile.name; // 使用选择的文件名作为下载文件名
+        a.click();
+        URL.revokeObjectURL(url);
+        isDataModified = false; // 重置修改标记
+    }
+
+    function addQuote() {
+        const quote = document.getElementById("quote-input").value.trim();
+        const author = document.getElementById("author-input").value.trim();
+        if (quote && author) {
+            data.unshift({quote, author}); // 将新数据插入到第一个索引
+            document.getElementById("quote-input").value = "";
+            document.getElementById("author-input").value = "";
+            renderQuotes();
+            jsonData.value = JSON.stringify(data, null, 2);
+            isDataModified = true; // 标记数据已被修改
+        }
+    }
+
+    function updateQuote() {
+        const quote = document.getElementById("quote-input").value.trim();
+        const author = document.getElementById("author-input").value.trim();
+        if (quote && author) {
+            const index = prompt("请输入要修改的名言索引:");
+            if (index !== null && data[index]) {
+                data[index] = {quote, author};
+                renderQuotes();
+                jsonData.value = JSON.stringify(data, null, 2);
+                isDataModified = true; // 标记数据已被修改
+            }
+        }
+    }
+
+    function bulkDelete() {
+        const indices = prompt("请输入要删除的名言索引(使用逗号分隔):");
+        if (indices !== null && indices.trim() !== "") {
+            const indexArray = indices.split(",").map(index => parseInt(index.trim()));
+            const deletedQuotesArray = indexArray.map(index => data[index]).filter(quote => quote);
+            deletedQuotes = deletedQuotes.concat(deletedQuotesArray); // 将删除的名言添加到 deletedQuotes 数组中
+            data = data.filter((_, index) => !indexArray.includes(index)); // 从 data 数组中删除选定的索引对应的名言
+            renderQuotes();
+            jsonData.value = JSON.stringify(data, null, 2);
+            isDataModified = true; // 标记数据已被修改
+        }
+    }
+
+    function undoDelete() {
+        if (deletedQuotes.length > 0) {
+            const quote = deletedQuotes.pop(); // 从 deletedQuotes 数组中获取最后一个删除的名言
+            data.unshift(quote); // 将名言添加回 data 数组的第一个索引
+            renderQuotes();
+            jsonData.value = JSON.stringify(data, null, 2);
+            isDataModified = true; // 标记数据已被修改
+        } else {
+            alert("没有可以撤销删除的名言");
+        }
+    }
+
+    function renderQuotes() {
+        quoteList.innerHTML = "";
+        data.slice(0, 50).forEach((item, index) => { // 只展示前50条数据
+            const div = document.createElement("div");
+            div.textContent = `${index}. "${item.quote}" - ${item.author}`;
+            quoteList.appendChild(div);
+        });
+    }
+
+    window.addEventListener('beforeunload', (event) => {
+        if (isDataModified) {
+            event.preventDefault();
+            event.returnValue = '';
+        }
+    });
+</script>
+</body>
+</html>
