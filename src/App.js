@@ -5,12 +5,23 @@ import quotes from './assets/quotes.json';
 function App() {
   const [quote, setQuote] = useState({});
   const [quoteStack, setQuoteStack] = useState([...quotes]);
+  const isMobile = /iPhone|iPad|iPod|Android/i.test(navigator.userAgent);
 
   useEffect(() => {
     initializeQuotes();
-    window.addEventListener('keydown', handleKeyDown);
+    if (isMobile) {
+      window.addEventListener('dblclick', handleDoubleClick);
+    } else {
+      window.addEventListener('keydown', handleKeyDown);
+      window.addEventListener('click', handleClick);
+    }
     return () => {
-      window.removeEventListener('keydown', handleKeyDown);
+      if (isMobile) {
+        window.removeEventListener('dblclick', handleDoubleClick);
+      } else {
+        window.removeEventListener('keydown', handleKeyDown);
+        window.removeEventListener('click', handleClick);
+      }
     };
   }, []);
 
@@ -56,8 +67,16 @@ function App() {
     }
   };
 
+  const handleDoubleClick = () => {
+    fetchQuote();
+  };
+
+  const handleClick = () => {
+    fetchQuote();
+  };
+
   return (
-    <div className="App" onClick={fetchQuote} tabIndex="0">
+    <div className="App" onDoubleClick={isMobile ? handleDoubleClick : null} onClick={!isMobile ? handleClick : null} tabIndex="0">
       {!isQuoteEmpty(quote) && (
         <>
           <h1>{quote.quote}</h1>
