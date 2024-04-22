@@ -14,6 +14,7 @@
 
 h1 {
   font-size: 48px; /* Base font size for h1 */
+  font-weight: bold;
   max-width: 70%;
   text-shadow: 2px 2px 4px rgba(0, 0, 0, 0.5);
   text-align: center;
@@ -32,6 +33,7 @@ p {
 @media (max-width: 1200px) {
   h1 {
     font-size: 46px; /* Smaller font size for h1 on medium screens */
+    font-weight: bold;
     max-width: 75%;
     text-align: center;
   }
@@ -47,6 +49,7 @@ p {
   }
   h1 {
     font-size: 33px; /* Smaller font size for h1 on small screens */
+    font-weight: bold;
     max-width: 90%;
     text-align: center;
   }
@@ -59,11 +62,15 @@ p {
 @media (max-width: 480px) {
   h1 {
     font-size: 32px; /* Even smaller font size for h1 on very small screens */
+    font-weight: bold;
     max-width: 90%;
     text-align: center;
   }
   p {
     font-size: 23px; /* Even smaller font size for p on very small screens */
-    margin-right: 87px;
+    margin-right: 86px;
   }
 }
+
+
+
