@@ -40,7 +40,7 @@ class TextCleaner:
         :param quote: 原始quote文本。
         :return: 清洗后的quote文本。
         """
-        quote = quote.replace(',', '，').replace('.', '。').replace(';', '；').replace('?', '？').replace('!', '！').replace(':', '：').replace('"', '”').replace('\\n', '\n').replace('……', '。')
+        quote = quote.replace(',', '，').replace('.', '。').replace(';', '；').replace('?', '？').replace('!', '！').replace(':', '：').replace('"', '”').replace('\\n', '\n').replace('……', '。').replace('；。', '。')
         return self.check_end_punctuation(quote.strip())
 
     def _update_author(self, author):

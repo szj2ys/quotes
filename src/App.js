@@ -83,7 +83,7 @@ function App() {
           {quote.author && <p>- {quote.author}</p>}
         </>
       )}
-      {isQuoteEmpty(quote) && <p>正在加载名言...</p>}
+      {isQuoteEmpty(quote) && <p>请手动刷新一下...</p>}
     </div>
   );
 }
