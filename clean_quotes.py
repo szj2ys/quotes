@@ -2,6 +2,7 @@ import json, string
 from pathlib import Path
 from datetime import datetime
 
+
 class TextCleaner:
     def __init__(self, input_file_path):
         """
@@ -40,7 +41,10 @@ class TextCleaner:
         :param quote: 原始quote文本。
         :return: 清洗后的quote文本。
         """
-        quote = quote.replace('……', '。').replace(',', '，').replace(';', '；').replace('?', '？').replace('!', '！').replace(':', '：').replace('"', '”').replace('\\n', '\n').replace('；。', '。').replace('？。', '。')
+        quote = quote.replace('……', '。').replace(',', '，').replace(';','；').\
+            replace('?', '？').replace('!', '！').replace(':', '：').\
+            replace('"','”').replace('\\n', '\n').replace('；。', '。').\
+            replace('？。', '。').replace('(', '（').replace(')', '）')
         quote = self.convert_full_stop(quote)
         return self.check_end_punctuation(quote.strip())
 
@@ -60,7 +64,7 @@ class TextCleaner:
         result = ""
         for i in range(len(text)):
             if text[i] == '.':
-                if i == 0 or not text[i-1].isdigit():
+                if i == 0 or not text[i - 1].isdigit():
                     result += '。'
                 else:
                     result += '.'
@@ -91,19 +95,15 @@ class TextCleaner:
         将清洗后的数据保存到新的文件中。
         """
         output_file = self.input_file.parent / f'quotes.json'
-        self.input_file.rename(self.input_file.parent / f'quotes_bak_{datetime.now().strftime("%Y%m%d%H%M")}.json')
+        self.input_file.rename(
+            self.input_file.parent / f'quotes_bak_{datetime.now().strftime("%Y%m%d%H%M")}.json')
         print(f'总共有{len(self.data)}条数据...')
         with output_file.open('w', encoding='utf-8') as file:
             json.dump(self.data, file, ensure_ascii=False, indent=4)
+
 
 if __name__ == "__main__":
     cleaner = TextCleaner('src/assets/quotes.json')  # 输入文件名
     cleaner.clean_data()
     cleaner.save_data()
     print('Well done!')
-
-
-
-
-
-
