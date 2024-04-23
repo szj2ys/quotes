@@ -1,4 +1,5 @@
 import React, { useState, useEffect } from 'react';
+import { useSwipeable } from 'react-swipeable';
 import './App.css';
 import quotes from './assets/quotes.json';
 
@@ -75,8 +76,15 @@ function App() {
     fetchQuote();
   };
 
+  const swipeHandlers = useSwipeable({
+    onSwipedLeft: () => fetchQuote(),
+    onSwipedRight: () => fetchQuote(),
+    preventDefaultTouchmoveEvent: true,
+    trackMouse: true,
+  });
+
   return (
-    <div className="App" onDoubleClick={isMobile ? handleDoubleClick : null} onClick={!isMobile ? handleClick : null} tabIndex="0">
+    <div className="App" {...swipeHandlers} onDoubleClick={isMobile ? handleDoubleClick : null} onClick={!isMobile ? handleClick : null} tabIndex="0">
       {!isQuoteEmpty(quote) && (
         <>
           <h1>{quote.quote}</h1>
