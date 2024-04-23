@@ -23,7 +23,7 @@ class TextCleaner:
 
     def check_end_punctuation(self, text):
         """检查是否以标点结尾"""
-        chinese_period = ['。', '！']
+        chinese_period = ['。', '！', '？']
 
         # 判断是否以标点符号结尾
         if text and (
@@ -40,7 +40,7 @@ class TextCleaner:
         :param quote: 原始quote文本。
         :return: 清洗后的quote文本。
         """
-        quote = quote.replace(',', '，').replace('.', '。').replace(';', '；').replace('?', '？').replace('!', '！').replace(':', '：').replace('"', '”').replace('\\n', '\n').replace('……', '。').replace('；。', '。')
+        quote = quote.replace('……', '。').replace(',', '，').replace(';', '；').replace('?', '？').replace('!', '！').replace(':', '：').replace('"', '”').replace('\\n', '\n').replace('.', '。').replace('；。', '。').replace('？。', '。')
         return self.check_end_punctuation(quote.strip())
 
     def _update_author(self, author):
