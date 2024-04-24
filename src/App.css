@@ -1,76 +1,100 @@
 .App {
-  display: flex;
-  flex-direction: column;
-  justify-content: center;
-  align-items: center;
-  min-height: 100vh;
-  background: url('./img/background.jpg') no-repeat center center fixed;
-  background-size: cover;
-  color: #fff;
-  font-size: 24px; /* Base font size */
-  text-align: center;
-  cursor: pointer;
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+    min-height: 100vh;
+    background: url('./img/background.jpg') no-repeat center center fixed;
+    background-size: cover;
+    color: #fff;
+    font-size: 24px; /* Base font size */
+    text-align: center;
+    cursor: pointer;
 }
 
 h1 {
-  font-size: 48px; /* Base font size for h1 */
-  font-weight: bold;
-  max-width: 70%;
-  text-shadow: 2px 2px 4px rgba(0, 0, 0, 0.5);
-  text-align: center;
-  line-height: 1.6;
+    font-size: 48px; /* Base font size for h1 */
+    font-weight: bold;
+    max-width: 70%;
+    text-shadow: 2px 2px 4px rgba(0, 0, 0, 0.5);
+    text-align: center;
+    line-height: 1.6;
 }
 
 p {
-  font-size: 28px; /* Base font size for p */
-  font-style: italic;
-  align-self: flex-end;
-  margin-right: 300px; /* Fixed margin might not be responsive */
-  text-shadow: 2px 2px 4px rgba(0, 0, 0, 0.5);
+    font-size: 28px; /* Base font size for p */
+    font-style: italic;
+    align-self: flex-end;
+    margin-right: 300px; /* Fixed margin might not be responsive */
+    text-shadow: 2px 2px 4px rgba(0, 0, 0, 0.5);
 }
 
 /* Responsive styles */
 @media (max-width: 1200px) {
-  h1 {
-    font-size: 46px; /* Smaller font size for h1 on medium screens */
-    font-weight: bold;
-    max-width: 75%;
-    text-align: center;
-  }
-  p {
-    font-size: 26px; /* Smaller font size for p on medium screens */
-    margin-right: 300px; /* Adjust margin for medium screens */
-  }
+    h1 {
+        font-size: 46px; /* Smaller font size for h1 on medium screens */
+        font-weight: bold;
+        max-width: 75%;
+        text-align: center;
+    }
+
+    p {
+        font-size: 26px; /* Smaller font size for p on medium screens */
+        margin-right: 300px; /* Adjust margin for medium screens */
+    }
 }
 
 @media (max-width: 768px) {
-  .App {
-    font-size: 18px; /* Smaller font size for base text on small screens */
-  }
-  h1 {
-    font-size: 33px; /* Smaller font size for h1 on small screens */
-    font-weight: bold;
-    max-width: 90%;
-    text-align: center;
-  }
-  p {
-    font-size: 24px; /* Smaller font size for p on small screens */
-    margin-right: 88px;
-  }
+    .App {
+        font-size: 18px; /* Smaller font size for base text on small screens */
+    }
+
+    h1 {
+        font-size: 33px; /* Smaller font size for h1 on small screens */
+        font-weight: bold;
+        max-width: 90%;
+        text-align: center;
+    }
+
+    p {
+        font-size: 24px; /* Smaller font size for p on small screens */
+        margin-right: 88px;
+    }
 }
 
 @media (max-width: 480px) {
-  h1 {
-    font-size: 32px; /* Even smaller font size for h1 on very small screens */
-    font-weight: bold;
-    max-width: 90%;
-    text-align: center;
-  }
-  p {
-    font-size: 23px; /* Even smaller font size for p on very small screens */
-    margin-right: 86px;
-  }
+    h1 {
+        font-size: 32px; /* Even smaller font size for h1 on very small screens */
+        font-weight: bold;
+        max-width: 90%;
+        text-align: center;
+    }
+
+    p {
+        font-size: 23px; /* Even smaller font size for p on very small screens */
+        margin-right: 86px;
+    }
 }
 
 
+.copy-button {
+    position: fixed; /* Make the button position fixed */
+    bottom: 25px; /* Position the button 20 pixels from the bottom of the page */
+    right: 25px; /* Position the button 20 pixels from the right of the page */
+    background: none;
+    border: none;
+    cursor: pointer;
+    padding: 0;
+    color: #666;
+    transition: color 0.2s;
+}
 
+.copy-button:hover {
+    color: #333;
+}
+
+.copied-message {
+    margin-left: 8px;
+    font-size: 14px;
+    color: green;
+}

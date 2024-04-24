@@ -1,0 +1,141 @@
+这个 React 应用程序是一个随机名言生成器，它具有以下逻辑和功能，按照功能实现然后给我完整的代码：
+
+初始化阶段：
+
+从 quotes.json 文件中加载所有名言，并将其存储在 quoteStack 状态中。
+随机选择一条名言作为初始显示的名言，并将其存储在 quote 状态中。用户切换到下一条quote要把当前quote更新到previousQuotes
+从 quoteStack 中移除选中的名言。定义一个previousQuotes用于存储使用过的quote，当用户切换到下一条quote时，要把当前quote更新到previousQuotes
+
+事件监听：
+
+在组件挂载时，根据设备类型（移动设备或桌面设备）添加相应的事件监听器。
+移动设备：监听双击事件 dblclick，触发获取新名言的操作。
+桌面设备：监听键盘事件 keydown（空格键）、点击事件 click，右按键、下按键触发获取新名言的操作。
+
+获取新名言：
+
+当 quote 状态为空对象且 quoteStack 中还有名言时，自动触发获取新名言的操作。
+从 quoteStack 中随机选择一条名言，并将其设置为当前的 quote 状态。
+从 quoteStack 中移除选中的名言。
+如果 quoteStack 为空，重新初始化名言堆栈。
+
+交互事件处理：
+
+当在桌面设备上按下空格键时，触发获取新名言的操作。
+当在桌面设备上按下右按键、下按键时，触发获取新名言的操作。
+当在移动设备上双击屏幕时，触发获取新名言的操作。
+当在桌面设备上单击屏幕时，触发获取新名言的操作。
+滑动手势支持（使用 react-swipeable 库）：
+当在屏幕上向右滑动时，触发获取新名言的操作。
+当在屏幕上向左滑动时，判断previousQuotes是否有值，如果有获取上一条名言，没有不响应。
+桌面设备上按下左按键和上按键时，判断previousQuotes是否有值，如果有获取上一条名言，没有不响应。
+
+渲染：
+
+如果 quote 状态不为空对象，显示当前的名言和作者（如果有）。
+如果 quote 状态为空对象，显示 "请手动刷新一下..." 的提示信息。
+通过以上逻辑和功能，该应用程序实现了随机显示名言的功能，并支持桌面设备的键盘和点击事件以及移动设备的双击和滑动手势来获取新的名言。当所有名言都显示完毕后，会重新初始化名言堆栈，确保可以继续随机显示名言。
+
+参考代码
+import React, { useState, useEffect } from 'react';
+import { useSwipeable } from 'react-swipeable';
+import './App.css';
+import quotes from './assets/quotes.json';
+
+function App() {
+  const [quote, setQuote] = useState({});
+  const [quoteStack, setQuoteStack] = useState([...quotes]);
+  const isMobile = /iPhone|iPad|iPod|Android/i.test(navigator.userAgent);
+
+  useEffect(() => {
+    initializeQuotes();
+    if (isMobile) {
+      window.addEventListener('dblclick', handleDoubleClick);
+    } else {
+      window.addEventListener('keydown', handleKeyDown);
+      window.addEventListener('click', handleClick);
+    }
+    return () => {
+      if (isMobile) {
+        window.removeEventListener('dblclick', handleDoubleClick);
+      } else {
+        window.removeEventListener('keydown', handleKeyDown);
+        window.removeEventListener('click', handleClick);
+      }
+    };
+  }, []);
+
+  useEffect(() => {
+    if (isQuoteEmpty(quote) && quoteStack.length > 0) {
+      fetchQuote();
+    }
+  }, [quote, quoteStack]);
+
+  const isQuoteEmpty = (quote) => {
+    if (typeof quote !== 'object' || quote === null) {
+      return true;
+    }
+    return Object.keys(quote).length === 0;
+  };
+
+  const initializeQuotes = () => {
+    const updatedQuoteStack = [...quotes];
+    const randomIndex = Math.floor(Math.random() * updatedQuoteStack.length);
+    const selectedQuote = updatedQuoteStack[randomIndex];
+    setQuote(selectedQuote);
+    updatedQuoteStack.splice(randomIndex, 1);
+    setQuoteStack(updatedQuoteStack);
+  };
+
+  const fetchQuote = () => {
+    const randomIndex = Math.floor(Math.random() * quoteStack.length);
+    const selectedQuote = quoteStack[randomIndex];
+    setQuote(selectedQuote);
+
+    const updatedQuoteStack = [...quoteStack];
+    updatedQuoteStack.splice(randomIndex, 1);
+    setQuoteStack(updatedQuoteStack);
+
+    if (updatedQuoteStack.length === 0) {
+      initializeQuotes();
+    }
+  };
+
+  const handleKeyDown = (event) => {
+    if (event.code === 'Space') {
+      fetchQuote();
+    }
+  };
+
+  const handleDoubleClick = () => {
+    fetchQuote();
+  };
+
+  const handleClick = () => {
+    fetchQuote();
+  };
+
+  const swipeHandlers = useSwipeable({
+    onSwipedLeft: () => fetchQuote(),
+    onSwipedRight: () => fetchQuote(),
+    preventDefaultTouchmoveEvent: true,
+    trackMouse: true,
+  });
+
+  return (
+    <div className="App" {...swipeHandlers} onDoubleClick={isMobile ? handleDoubleClick : null} onClick={!isMobile ? handleClick : null} tabIndex="0">
+      {!isQuoteEmpty(quote) && (
+        <>
+          <h1>{quote.quote}</h1>
+          {quote.author && <p>- {quote.author}</p>}
+        </>
+      )}
+      {isQuoteEmpty(quote) && <p>请手动刷新一下...</p>}
+    </div>
+  );
+}
+
+export default App;
+
+
+
