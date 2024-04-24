@@ -1,9 +1,9 @@
-import React, {useState, useEffect} from 'react';
-import {useSwipeable} from 'react-swipeable';
+import React, { useState, useEffect } from 'react';
+import { useSwipeable } from 'react-swipeable';
 import './App.css';
 import quotes from './assets/quotes.json';
-import {CopyToClipboard} from 'react-copy-to-clipboard';
-import {FiCopy} from 'react-icons/fi';
+import { CopyToClipboard } from 'react-copy-to-clipboard';
+import { FiCopy } from 'react-icons/fi';
 
 function App() {
     const [quote, setQuote] = useState({});
@@ -35,12 +35,7 @@ function App() {
         }
     }, [quote, quoteStack]);
 
-    const isQuoteEmpty = (quote) => {
-        if (typeof quote !== 'object' || quote === null) {
-            return true;
-        }
-        return Object.keys(quote).length === 0;
-    };
+    const isQuoteEmpty = (quote) => Object.keys(quote).length === 0;
 
     const initializeQuotes = () => {
         const updatedQuoteStack = [...quotes];
@@ -65,19 +60,30 @@ function App() {
         }
     };
 
-    const handleKeyDown = (event) => {
-        const allowedKeys = ['Space', 'ArrowUp', 'ArrowDown', 'ArrowLeft', 'ArrowRight'];
-        if (allowedKeys.includes(event.code)) {
+    const handleQuoteChange = () => {
+        if (isMobile) {
+            handleDoubleClick();
+        } else {
             fetchQuote();
         }
     };
 
-    const handleDoubleClick = () => {
-        fetchQuote();
+    const handleKeyDown = (event) => {
+        const allowedKeys = ['Space', 'ArrowUp', 'ArrowDown', 'ArrowLeft', 'ArrowRight'];
+        if (allowedKeys.includes(event.code)) {
+            handleQuoteChange();
+        }
     };
 
-    const handleClick = () => {
-        fetchQuote();
+    const handleDoubleClick = () => {
+        handleQuoteChange();
+    };
+
+    const handleClick = (event) => {
+        const isCopyButton = event.target.closest('.copy-button');
+        if (!isCopyButton) {
+            handleQuoteChange();
+        }
     };
 
     const swipeHandlers = useSwipeable({
@@ -88,9 +94,13 @@ function App() {
     });
 
     return (
-        <div className="App" {...swipeHandlers}
-             onDoubleClick={isMobile ? handleDoubleClick : null}
-             onClick={!isMobile ? handleClick : null} tabIndex="0">
+        <div
+            className="App"
+            {...swipeHandlers}
+            onDoubleClick={isMobile ? handleDoubleClick : null}
+            onClick={!isMobile ? handleClick : null}
+            tabIndex="0"
+        >
             {!isQuoteEmpty(quote) && (
                 <>
                     <h1>{quote.quote}</h1>
@@ -103,7 +113,7 @@ function App() {
                         }}
                     >
                         <button className="copy-button" aria-label="Copy Quote">
-                            <FiCopy size={25}/>
+                            <FiCopy size={35} />
                         </button>
                     </CopyToClipboard>
                     {copied && <span className="copied-message">Copied!</span>}
@@ -115,6 +125,3 @@ function App() {
 }
 
 export default App;
-
-
-
