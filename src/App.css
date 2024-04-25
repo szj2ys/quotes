@@ -4,95 +4,87 @@
     justify-content: center;
     align-items: center;
     min-height: 100vh;
-    background: url('./img/background.jpg') no-repeat center center fixed;
+    background: url('./img/background.jpg');
+    background-repeat: no-repeat;
+    background-attachment: fixed;
+    background-position: center;
     background-size: cover;
     color: #fff;
-    font-size: 24px; /* Base font size */
+    font-size: 24px;
     text-align: center;
     cursor: pointer;
+    position: relative;
+    overflow: clip;
 }
 
+
 pre {
-    font-size: 48px; /* Base font size for pre */
+    font-size: 48px;
     font-weight: bold;
     max-width: 70%;
     text-shadow: 2px 2px 4px rgba(0, 0, 0, 0.5);
     text-align: left;
     line-height: 1.6;
-    white-space: pre-wrap; /* 保留空白符序列,但是长单词会自动换行 */
+    white-space: pre-wrap;
     word-wrap: break-word;
 }
 
 p {
-    font-size: 28px; /* Base font size for p */
+    font-size: 28px;
     font-style: italic;
     align-self: flex-end;
-    margin-right: 300px; /* Fixed margin might not be responsive */
+    margin-right: 300px;
     text-shadow: 2px 2px 4px rgba(0, 0, 0, 0.5);
 }
 
-/* Responsive styles */
 @media (max-width: 1200px) {
     pre {
-        font-size: 46px; /* Smaller font size for pre on medium screens */
-        font-weight: bold;
+        font-size: 46px;
         max-width: 75%;
-        text-align: left;
     }
 
     p {
-        font-size: 26px; /* Smaller font size for p on medium screens */
-        margin-right: 300px; /* Adjust margin for medium screens */
+        font-size: 26px;
     }
 }
 
 @media (max-width: 768px) {
-    .App {
-        font-size: 18px; /* Smaller font size for base text on small screens */
-    }
-
     pre {
-        font-size: 33px; /* Smaller font size for pre on small screens */
-        font-weight: bold;
+        font-size: 33px;
         max-width: 90%;
-        text-align: left;
     }
 
     p {
-        font-size: 24px; /* Smaller font size for p on small screens */
+        font-size: 24px;
         margin-right: 88px;
     }
 }
 
 @media (max-width: 480px) {
     pre {
-        font-size: 32px; /* Even smaller font size for pre on very small screens */
-        font-weight: bold;
-        max-width: 90%;
-        text-align: left;
+        font-size: 32px;
     }
 
     p {
-        font-size: 23px; /* Even smaller font size for p on very small screens */
+        font-size: 23px;
         margin-right: 86px;
     }
 }
 
-
 .copy-button {
-    position: fixed; /* Make the button position fixed */
-    bottom: 25px; /* Position the button 20 pixels from the bottom of the page */
-    right: 25px; /* Position the button 20 pixels from the right of the page */
+    position: fixed;
+    bottom: 25px;
+    right: 25px;
     background: none;
     border: none;
     cursor: pointer;
     padding: 0;
-    color: #666;
-    transition: color 0.88s;
+    color: #888;
+    transition: color 0.68s;
 }
 
 .copy-button:hover {
-    color: #333;
+    color: #E6E6FA;
 }
 
 .copied-message {
@@ -103,7 +95,29 @@ p {
     transform: translate(-50%, -50%);
     text-align: center;
     justify-content: center;
-    font-size: 66px;
-    color: purple;
+    font-size: 88px;
+    color: BlueViolet;
     z-index: 999;
 }
+
+@media (max-width: 1200px) {
+    .copied-message {
+        font-size: 88px;
+    }
+}
+
+@media (max-width: 768px) {
+    .copied-message {
+        font-size: 77px;
+    }
+}
+
+@media (max-width: 480px) {
+    .copied-message {
+        font-size: 66px;
+    }
+}
+
+
+
+
