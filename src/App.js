@@ -103,7 +103,7 @@ function App() {
         >
             {!isQuoteEmpty(quote) && (
                 <>
-                    <h1>{quote.quote}</h1>
+                    <pre>{quote.quote}</pre>
                     {quote.author && <p>- {quote.author}</p>}
                     <CopyToClipboard
                         text={`${quote.quote} ${quote.author ? `- ${quote.author}` : ''}`}

@@ -12,13 +12,15 @@
     cursor: pointer;
 }
 
-h1 {
-    font-size: 48px; /* Base font size for h1 */
+pre {
+    font-size: 48px; /* Base font size for pre */
     font-weight: bold;
     max-width: 70%;
     text-shadow: 2px 2px 4px rgba(0, 0, 0, 0.5);
-    text-align: center;
+    text-align: left;
     line-height: 1.6;
+    white-space: pre-wrap; /* 保留空白符序列,但是长单词会自动换行 */
+    word-wrap: break-word;
 }
 
 p {
@@ -31,11 +33,11 @@ p {
 
 /* Responsive styles */
 @media (max-width: 1200px) {
-    h1 {
-        font-size: 46px; /* Smaller font size for h1 on medium screens */
+    pre {
+        font-size: 46px; /* Smaller font size for pre on medium screens */
         font-weight: bold;
         max-width: 75%;
-        text-align: center;
+        text-align: left;
     }
 
     p {
@@ -49,11 +51,11 @@ p {
         font-size: 18px; /* Smaller font size for base text on small screens */
     }
 
-    h1 {
-        font-size: 33px; /* Smaller font size for h1 on small screens */
+    pre {
+        font-size: 33px; /* Smaller font size for pre on small screens */
         font-weight: bold;
         max-width: 90%;
-        text-align: center;
+        text-align: left;
     }
 
     p {
@@ -63,11 +65,11 @@ p {
 }
 
 @media (max-width: 480px) {
-    h1 {
-        font-size: 32px; /* Even smaller font size for h1 on very small screens */
+    pre {
+        font-size: 32px; /* Even smaller font size for pre on very small screens */
         font-weight: bold;
         max-width: 90%;
-        text-align: center;
+        text-align: left;
     }
 
     p {
@@ -86,7 +88,7 @@ p {
     cursor: pointer;
     padding: 0;
     color: #666;
-    transition: color 0.2s;
+    transition: color 0.88s;
 }
 
 .copy-button:hover {
@@ -94,7 +96,14 @@ p {
 }
 
 .copied-message {
+    position: fixed;
+    font-weight: bold;
+    top: 40%;
+    left: 50%;
+    transform: translate(-50%, -50%);
     text-align: center;
-    font-size: 34px;
-    color: green;
+    justify-content: center;
+    font-size: 66px;
+    color: purple;
+    z-index: 999;
 }
