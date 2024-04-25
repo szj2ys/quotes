@@ -44,7 +44,8 @@ class TextCleaner:
         quote = quote.replace('……', '。').replace(',', '，').replace(';','；').\
             replace('?', '？').replace('!', '！').replace(':', '：').\
             replace('"','”').replace('\\n', '\n').replace('；。', '。').\
-            replace('？。', '。').replace('(', '（').replace(')', '）')
+            replace('？。', '。').replace('(', '（').replace(')', '）').\
+            replace(' ', '')
         quote = self.convert_full_stop(quote)
         return self.check_end_punctuation(quote.strip())
 
