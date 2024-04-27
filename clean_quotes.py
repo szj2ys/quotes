@@ -41,12 +41,12 @@ class TextCleaner:
         :param quote: 原始quote文本。
         :return: 清洗后的quote文本。
         """
-        quote = quote.replace('……', '。').replace(',', '，').replace(';','；').\
+        quote = quote.replace(',', '，').replace(';','；').\
             replace('?', '？').replace('!', '！').replace(':', '：').\
             replace('"','”').replace('\\n', '\n').replace('；。', '。').\
-            replace('？。', '。').replace('(', '（').replace(')', '）').\
-            replace(' ', '')
+            replace('？。', '。').replace('(', '（').replace(')', '）')
         quote = self.convert_full_stop(quote)
+
         return self.check_end_punctuation(quote.strip())
 
     def _update_author(self, author):
@@ -57,7 +57,7 @@ class TextCleaner:
         :return: 更新后的author文本。
         """
         author = '佚名' if not author else author
-        if len(author) > 12:
+        if len(author) > 8:
             print(author)
         return author.replace('・', '·').replace('•', '·').strip()
 
