@@ -7,8 +7,6 @@
 }
 
 
-
-
 .content-wrapper {
     display: flex;
     flex-direction: column;
@@ -26,30 +24,33 @@
     background-position: center;
     background-size: cover;
     color: #fff;
-    user-select: none;  /* 禁用双击选中文本 */
+    user-select: none; /* 禁用双击选中文本 */
 }
 
 pre {
     font-size: 48px;
     font-weight: bold;
-    max-width: 70%;
+    max-width: 77%;
     text-shadow: 2px 2px 4px rgba(0, 0, 0, 0.5);
-    text-align: left;
+    text-align: justify;
     line-height: 1.6;
     white-space: pre-wrap;
     word-wrap: break-word;
+    overflow-y: auto; /* 添加滚动条 */
+    scroll-behavior: smooth; /* 平滑滚动，需要浏览器支持 */
 }
 
 p {
     font-size: 28px;
     font-style: italic;
     text-shadow: 2px 2px 4px rgba(0, 0, 0, 0.5);
+    text-align: right;
 }
 
 @media (max-width: 1200px) {
     pre {
         font-size: 46px;
-        max-width: 75%;
+        max-width: 80%;
     }
 
     p {
@@ -71,6 +72,7 @@ p {
 @media (max-width: 480px) {
     pre {
         font-size: 32px;
+        max-width: 92%;
     }
 
     p {
@@ -124,6 +126,9 @@ p {
         font-size: 66px;
     }
 }
+
+
+
 
 
 
