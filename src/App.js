@@ -90,7 +90,7 @@ function App() {
         onSwipedRight: () => fetchQuote(),
         preventDefaultTouchmoveEvent: true,
         trackMouse: true, // 鼠标事件跟踪
-        delta: 90, // 增加触发滑动事件所需的最小移动距离
+        delta: 66, // 增加触发滑动事件所需的最小移动距离
         preventScrollOnSwipe: false, // 防止滑动事件触发页面滚动
     });
 
