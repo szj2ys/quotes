@@ -45,8 +45,7 @@ function App() {
         // 如果 preRef.current 存在(组件已渲染)
         if (preRef.current) {
             // 将 pre 元素滚动到顶部
-            // preRef.current.scrollIntoView({behavior: 'smooth'});
-            window.scrollTo(0, 0);
+            preRef.current.scrollIntoView({behavior: 'instant'});
         }
     }, [quote]);
 
