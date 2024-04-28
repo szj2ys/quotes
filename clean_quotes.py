@@ -47,6 +47,10 @@ class TextCleaner:
             replace('？。', '。').replace('(', '（').replace(')', '）')
         quote = self.convert_full_stop(quote)
 
+        # if any(c.isalpha() for c in quote if c.isascii()):
+        #     # 检查quote是否包含字母
+        #     print(quote)
+
         return self.check_end_punctuation(quote.strip())
 
     def _update_author(self, author):

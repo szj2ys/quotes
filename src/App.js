@@ -1,130 +1,169 @@
+// 导入必要的模块和组件
 import React, {useState, useEffect} from 'react';
 import {useSwipeable} from 'react-swipeable';
-import './App.css';
-import quotes from './assets/quotes.json';
-import {CopyToClipboard} from 'react-copy-to-clipboard';
-import {FiCopy} from 'react-icons/fi';
+import './App.css'; // 应用的样式文件
+import quotes from './assets/quotes.json'; // 引入名言数据
+import {CopyToClipboard} from 'react-copy-to-clipboard'; // 复制到剪贴板组件
+import {FiCopy} from 'react-icons/fi'; // 复制图标组件
 
+// 主应用组件
 function App() {
-    const [quote, setQuote] = useState({});
-    const [quoteStack, setQuoteStack] = useState([...quotes]);
-    const [copied, setCopied] = useState(false);
-    const isMobile = /iPhone|iPad|iPod|Android/i.test(navigator.userAgent);
+    // 状态定义
+    const [quote, setQuote] = useState({}); // 当前显示的名言
+    const [quoteStack, setQuoteStack] = useState([...quotes]); // 剩余未展示的名言栈
+    const [prevQuotes, setPrevQuotes] = useState([]); // 已展示过的名言列表
+    const [copied, setCopied] = useState(false); // 是否已复制到剪贴板的状态
+    const isMobile = /iPhone|iPad|iPod|Android/i.test(navigator.userAgent); // 判断是否为移动设备
 
+    // 初始化名言和设置事件监听器
     useEffect(() => {
-        initializeQuotes();
+        initializeQuotes(); // 初始化名言展示
+
+        // 根据设备类型添加相应的事件监听
         if (isMobile) {
             window.addEventListener('dblclick', handleDoubleClick);
         } else {
             window.addEventListener('keydown', handleKeyDown);
-            window.addEventListener('dblclick', handleDoubleClick);
+            // window.addEventListener('dblclick', handleDoubleClick); # 会导致双击事件的函数出发两次，don't know why?
         }
+
+        // 组件卸载时移除事件监听
         return () => {
             if (isMobile) {
                 window.removeEventListener('dblclick', handleDoubleClick);
             } else {
                 window.removeEventListener('keydown', handleKeyDown);
-                window.removeEventListener('dblclick', handleDoubleClick);
+                // window.removeEventListener('dblclick', handleDoubleClick);
             }
         };
-    }, []);
+    }, []); // 空依赖数组，只在组件挂载和卸载时运行
 
+    // 当quote或quoteStack变化时，若当前没有名言且栈中有名言，则获取新名言
     useEffect(() => {
         if (isQuoteEmpty(quote) && quoteStack.length > 0) {
             fetchQuote();
         }
-    }, [quote, quoteStack]);
+    }, [quote, quoteStack, prevQuotes]);
 
+
+    // 检查对象是否为空
     const isQuoteEmpty = (quote) => Object.keys(quote).length === 0;
 
+    // 初始化名言展示逻辑
     const initializeQuotes = () => {
-        const updatedQuoteStack = [...quotes];
-        const randomIndex = Math.floor(Math.random() * updatedQuoteStack.length);
-        const selectedQuote = updatedQuoteStack[randomIndex];
+        const shuffledQuotes = [...quotes]; // 复制引用，避免直接修改原数组
+        const randomIndex = Math.floor(Math.random() * shuffledQuotes.length);
+        const selectedQuote = shuffledQuotes[randomIndex];
+
+        // 设置初始名言、更新栈和历史记录
         setQuote(selectedQuote);
-        updatedQuoteStack.splice(randomIndex, 1);
-        setQuoteStack(updatedQuoteStack);
+        setPrevQuotes(prevQuotes => [...prevQuotes, selectedQuote]);
+
+        shuffledQuotes.splice(randomIndex, 1);
+        setQuoteStack(shuffledQuotes);
     };
 
+    // 获取并展示新的名言
     const fetchQuote = () => {
         const randomIndex = Math.floor(Math.random() * quoteStack.length);
         const selectedQuote = quoteStack[randomIndex];
+
         setQuote(selectedQuote);
+        setPrevQuotes(prevQuotes => [...prevQuotes, selectedQuote]);
 
         const updatedQuoteStack = [...quoteStack];
         updatedQuoteStack.splice(randomIndex, 1);
         setQuoteStack(updatedQuoteStack);
 
+        // 如果栈空了，重新初始化
         if (updatedQuoteStack.length === 0) {
             initializeQuotes();
         }
     };
 
-    const handleQuoteChange = () => {
-        fetchQuote();
+    // 获取上一条名言
+    const getPreviousQuote = () => {
+
+        if (prevQuotes.length > 0) {
+            const prevQuote = prevQuotes[prevQuotes.length - 1];
+            setQuote(prevQuote);
+            prevQuotes.splice(prevQuotes.length - 1, 1);
+        }
     };
 
+
+    // 键盘事件处理，用于切换名言
     const handleKeyDown = (event) => {
         const isCopyButton = event.target.closest('.copy-button');
         if (!isCopyButton) {
             const allowedKeys = ['Space', 'ArrowUp', 'ArrowDown', 'ArrowLeft', 'ArrowRight'];
+            const goPrevioiusQuoteKeys = ['ArrowUp', 'ArrowLeft'];
             if (allowedKeys.includes(event.code)) {
-                handleQuoteChange();
+                if (goPrevioiusQuoteKeys.includes(event.code)) {
+                    getPreviousQuote();
+                } else {
+                    fetchQuote();
+                }
             }
         }
     };
 
-    const handleDoubleClick = () => {
-        handleQuoteChange();
+    // 双击事件处理，切换名言
+    const handleDoubleClick = (event) => {
+        fetchQuote();
     };
 
+    // 点击事件处理，除了复制按钮外的点击切换名言
     const handleClick = (event) => {
         const isCopyButton = event.target.closest('.copy-button');
         if (!isCopyButton) {
-            handleQuoteChange();
+            fetchQuote();
         }
     };
 
+    // 使用 useSwipeable 钩子处理滑动事件
     const swipeHandlers = useSwipeable({
-        onSwipedLeft: () => fetchQuote(),
-        onSwipedRight: () => fetchQuote(),
-        preventDefaultTouchmoveEvent: true,
-        trackMouse: true, // 鼠标事件跟踪
-        delta: 66, // 增加触发滑动事件所需的最小移动距离
-        preventScrollOnSwipe: false, // 防止滑动事件触发页面滚动
+        onSwipedLeft: () => fetchQuote(), // 向左滑动切换名言
+        onSwipedRight: () => fetchQuote(), // 向右滑动切换名言
+        preventDefaultTouchmoveEvent: true, // 阻止默认的触摸移动事件
+        trackMouse: true, // 跟踪鼠标事件
+        delta: 66, // 触发滑动的最小移动距离
+        preventScrollOnSwipe: false, // 不阻止滑动时的页面滚动
     });
 
+    // 渲染UI
     return (
         <div
             className="content-wrapper"
-            {...swipeHandlers}
-            onDoubleClick={handleDoubleClick}
-            tabIndex="0"
+            {...swipeHandlers} // 传递滑动事件处理器
+            onDoubleClick={handleDoubleClick} // 双击事件
+            tabIndex="0" // 允许div接收键盘焦点
         >
-            {!isQuoteEmpty(quote) && (
-                <>
-                    <pre>{quote.quote}</pre>
-                    {quote.author && <p>- {quote.author}</p>}
-                    <CopyToClipboard
-                        text={`${quote.quote} ${quote.author ? `- ${quote.author}` : ''}`}
-                        onCopy={() => {
-                            setCopied(true);
-                            setTimeout(() => setCopied(false), 2000);
-                        }}
-                    >
-                        <button className="copy-button" aria-label="Copy Quote">
-                            <FiCopy size={35}/>
-                        </button>
-                    </CopyToClipboard>
-                    {copied && <span className="copied-message">Copied!</span>}
-                </>
-            )}
-            {isQuoteEmpty(quote) && <p>请手动刷新一下...</p>}
+            {/* 名言展示内容 */}
+            <>
+                <pre>{quote.quote}</pre>
+                {/* 名言内容 */}
+                <p>- {quote.author}</p> {/* 作者 */}
+                {/* 复制到剪贴板按钮 */}
+                <CopyToClipboard
+                    text={`${quote.quote} ${quote.author ? `- ${quote.author}` : ''}`} // 复制的内容
+                    onCopy={() => {
+                        setCopied(true);
+                        setTimeout(() => setCopied(false), 2000); // 复制成功提示
+                    }}
+                >
+                    <button className="copy-button" aria-label="Copy Quote">
+                        <FiCopy size={35}/> {/* 复制图标 */}
+                    </button>
+                </CopyToClipboard>
+                {copied && <span
+                    className="copied-message">Copied!</span>} {/* 复制成功提示 */}
+            </>
         </div>
     );
 }
 
+// 导出App组件
 export default App;
-
 
 
