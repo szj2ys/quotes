@@ -1,5 +1,5 @@
 // 导入必要的模块和组件
-import React, {useState, useEffect} from 'react';
+import React, {useState, useEffect, useRef} from 'react';
 import {useSwipeable} from 'react-swipeable';
 import './App.css'; // 应用的样式文件
 import quotes from './assets/quotes.json'; // 引入名言数据
@@ -37,6 +37,18 @@ function App() {
             }
         };
     }, []); // 空依赖数组，只在组件挂载和卸载时运行
+
+    const preRef = useRef(null);
+
+    // 在组件挂载后执行效果
+    useEffect(() => {
+        // 如果 preRef.current 存在(组件已渲染)
+        if (preRef.current) {
+            // 将 pre 元素滚动到顶部
+            // preRef.current.scrollIntoView({behavior: 'smooth'});
+            window.scrollTo(0, 0);
+        }
+    }, [quote]);
 
     // 当quote或quoteStack变化时，若当前没有名言且栈中有名言，则获取新名言
     useEffect(() => {
@@ -141,7 +153,7 @@ function App() {
         >
             {/* 名言展示内容 */}
             <>
-                <pre>{quote.quote}</pre>
+                <pre ref={preRef}>{quote.quote}</pre>
                 {/* 名言内容 */}
                 <p>- {quote.author}</p> {/* 作者 */}
                 {/* 复制到剪贴板按钮 */}
@@ -165,5 +177,4 @@ function App() {
 
 // 导出App组件
 export default App;
-
 
