@@ -1,6 +1,9 @@
 .App {
     display: flex;
-    flex-direction: row;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+    width: 100%;
     min-height: 100vh;
     color: #fff;
     position: relative;
@@ -27,30 +30,36 @@
     user-select: none; /* 禁用双击选中文本 */
 }
 
+
+
 pre {
     font-size: 48px;
     font-weight: bold;
     max-width: 77%;
     text-shadow: 2px 2px 4px rgba(0, 0, 0, 0.5);
-    text-align: justify;
+    text-align: justify-all;
     line-height: 1.6;
     white-space: pre-wrap;
     word-wrap: break-word;
     overflow-y: auto; /* 添加滚动条 */
     scroll-behavior: smooth; /* 平滑滚动，需要浏览器支持 */
+    margin-left: 5%;
 }
+
 
 p {
     font-size: 28px;
     font-style: italic;
     text-shadow: 2px 2px 4px rgba(0, 0, 0, 0.5);
     text-align: right;
+    margin-left: 24%;
 }
 
 @media (max-width: 1200px) {
     pre {
         font-size: 46px;
         max-width: 80%;
+        text-align: justify-all;
     }
 
     p {
@@ -62,6 +71,7 @@ p {
     pre {
         font-size: 33px;
         max-width: 90%;
+        text-align: justify-all;
     }
 
     p {
@@ -73,6 +83,7 @@ p {
     pre {
         font-size: 32px;
         max-width: 92%;
+        text-align: justify-all;
     }
 
     p {
@@ -126,6 +137,7 @@ p {
         font-size: 66px;
     }
 }
+
 
 
 
