@@ -152,9 +152,9 @@ function App() {
         >
             {/* 名言展示内容 */}
             <>
-                <pre ref={preRef}>{quote.quote}</pre>
+                <pre ref={preRef} key={quote.quote}>{quote.quote}</pre>
                 {/* 名言内容 */}
-                <p>- {quote.author}</p> {/* 作者 */}
+                <p key={quote.author}>- {quote.author}</p> {/* 作者 */}
                 {/* 复制到剪贴板按钮 */}
                 <CopyToClipboard
                     text={`${quote.quote} ${quote.author ? `- ${quote.author}` : ''}`} // 复制的内容
