@@ -47,6 +47,26 @@ function App() {
             // 将 pre 元素滚动到顶部
             preRef.current.scrollIntoView({behavior: 'instant'});
         }
+
+        const calculateMargin = () => {
+            const preElement = preRef.current;
+            const containerWidth = preElement.parentElement.clientWidth;
+            const preWidth = preElement.clientWidth;
+            let marginLeftPercentage;
+            if (isMobile) {
+                marginLeftPercentage = ((containerWidth - preWidth) / 4 / containerWidth) * 100;
+            } else {
+                marginLeftPercentage = ((containerWidth - preWidth) / 8 / containerWidth) * 100;
+            }
+            preElement.style.marginLeft = `${marginLeftPercentage}%`;
+        };
+
+        calculateMargin();
+        window.addEventListener('resize', calculateMargin);
+
+        return () => {
+            window.removeEventListener('resize', calculateMargin);
+        };
     }, [quote]);
 
     // 当quote或quoteStack变化时，若当前没有名言且栈中有名言，则获取新名言
