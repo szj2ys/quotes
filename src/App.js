@@ -6,6 +6,7 @@ import quotes from './assets/quotes.json'; // 引入名言数据
 import {CopyToClipboard} from 'react-copy-to-clipboard'; // 复制到剪贴板组件
 import {FiCopy} from 'react-icons/fi'; // 复制图标组件
 
+
 // 主应用组件
 function App() {
     // 状态定义
@@ -14,6 +15,7 @@ function App() {
     const [prevQuotes, setPrevQuotes] = useState([]); // 已展示过的名言列表
     const [copied, setCopied] = useState(false); // 是否已复制到剪贴板的状态
     const isMobile = /iPhone|iPad|iPod|Android/i.test(navigator.userAgent); // 判断是否为移动设备
+    const preRef = useRef(null);
 
     // 初始化名言和设置事件监听器
     useEffect(() => {
@@ -38,8 +40,6 @@ function App() {
         };
     }, []); // 空依赖数组，只在组件挂载和卸载时运行
 
-    const preRef = useRef(null);
-
     // 在组件挂载后执行效果
     useEffect(() => {
         // 如果 preRef.current 存在(组件已渲染)
@@ -56,7 +56,7 @@ function App() {
             if (isMobile) {
                 marginLeftPercentage = ((containerWidth - preWidth) / 4 / containerWidth) * 100;
             } else {
-                marginLeftPercentage = ((containerWidth - preWidth) / 8 / containerWidth) * 100;
+                marginLeftPercentage = ((containerWidth - preWidth) / 88 / containerWidth) * 100;
             }
             preElement.style.marginLeft = `${marginLeftPercentage}%`;
         };
@@ -75,6 +75,15 @@ function App() {
             fetchQuote();
         }
     }, [quote, quoteStack, prevQuotes]);
+
+    useEffect(() => {
+        // ...
+
+        // 如果 prevQuotes 发生变化且长度大于0，更新 quote 状态
+        if (prevQuotes.length > 0) {
+            setQuote(prevQuotes[prevQuotes.length - 1]);
+        }
+    }, [prevQuotes]);
 
 
     // 检查对象是否为空
@@ -115,11 +124,15 @@ function App() {
     // 获取上一条名言
     const getPreviousQuote = () => {
 
-        if (prevQuotes.length > 0) {
+        const updatedPrevQuotes = [...prevQuotes];
+
+        if (updatedPrevQuotes.length > 0) {
             const prevQuote = prevQuotes[prevQuotes.length - 1];
             setQuote(prevQuote);
-            prevQuotes.splice(prevQuotes.length - 1, 1);
+            updatedPrevQuotes.splice(prevQuotes.length - 1, 1);
+            setPrevQuotes(updatedPrevQuotes);
         }
+
     };
 
 
@@ -144,6 +157,7 @@ function App() {
         fetchQuote();
     };
 
+
     // 点击事件处理，除了复制按钮外的点击切换名言
     const handleClick = (event) => {
         const isCopyButton = event.target.closest('.copy-button');
@@ -155,10 +169,10 @@ function App() {
     // 使用 useSwipeable 钩子处理滑动事件
     const swipeHandlers = useSwipeable({
         onSwipedLeft: () => fetchQuote(), // 向左滑动切换名言
-        onSwipedRight: () => fetchQuote(), // 向右滑动切换名言
+        onSwipedRight: () => getPreviousQuote(), // 向右滑动切换名言
         preventDefaultTouchmoveEvent: true, // 阻止默认的触摸移动事件
-        trackMouse: true, // 跟踪鼠标事件
-        delta: 66, // 触发滑动的最小移动距离
+        trackMouse: false, // 跟踪鼠标事件
+        delta: 88, // 触发滑动的最小移动距离
         preventScrollOnSwipe: false, // 不阻止滑动时的页面滚动
     });
 
@@ -196,4 +210,7 @@ function App() {
 
 // 导出App组件
 export default App;
+
+
+
 
