@@ -17,49 +17,44 @@ function App() {
     const isMobile = /iPhone|iPad|iPod|Android/i.test(navigator.userAgent); // 判断是否为移动设备
     const preRef = useRef(null);
 
-    // 初始化名言和设置事件监听器
+    // 将 calculateMargin 函数移到 useEffect 外部
+    const calculateMargin = () => {
+        const preElement = preRef.current;
+        const containerWidth = preElement.parentElement.clientWidth;
+        const preWidth = preElement.clientWidth;
+        let marginLeftPercentage;
+        if (isMobile) {
+            marginLeftPercentage = ((containerWidth - preWidth) / 4 / containerWidth) * 100;
+        } else {
+            marginLeftPercentage = ((containerWidth - preWidth) / 88 / containerWidth) * 100;
+        }
+        preElement.style.marginLeft = `${marginLeftPercentage}%`;
+    };
+
     useEffect(() => {
-        initializeQuotes(); // 初始化名言展示
+        initializeQuotes();
 
         // 根据设备类型添加相应的事件监听
         if (isMobile) {
             window.addEventListener('dblclick', handleDoubleClick);
         } else {
             window.addEventListener('keydown', handleKeyDown);
-            // window.addEventListener('dblclick', handleDoubleClick); # 会导致双击事件的函数出发两次，don't know why?
         }
 
-        // 组件卸载时移除事件监听
         return () => {
+            // 在组件卸载时移除事件监听
             if (isMobile) {
                 window.removeEventListener('dblclick', handleDoubleClick);
             } else {
                 window.removeEventListener('keydown', handleKeyDown);
-                // window.removeEventListener('dblclick', handleDoubleClick);
             }
         };
-    }, []); // 空依赖数组，只在组件挂载和卸载时运行
+    }, []);
 
-    // 在组件挂载后执行效果
     useEffect(() => {
-        // 如果 preRef.current 存在(组件已渲染)
         if (preRef.current) {
-            // 将 pre 元素滚动到顶部
             preRef.current.scrollIntoView({behavior: 'instant'});
         }
-
-        const calculateMargin = () => {
-            const preElement = preRef.current;
-            const containerWidth = preElement.parentElement.clientWidth;
-            const preWidth = preElement.clientWidth;
-            let marginLeftPercentage;
-            if (isMobile) {
-                marginLeftPercentage = ((containerWidth - preWidth) / 4 / containerWidth) * 100;
-            } else {
-                marginLeftPercentage = ((containerWidth - preWidth) / 88 / containerWidth) * 100;
-            }
-            preElement.style.marginLeft = `${marginLeftPercentage}%`;
-        };
 
         calculateMargin();
         window.addEventListener('resize', calculateMargin);
@@ -69,21 +64,17 @@ function App() {
         };
     }, [quote]);
 
-    // 当quote或quoteStack变化时，若当前没有名言且栈中有名言，则获取新名言
     useEffect(() => {
         if (isQuoteEmpty(quote) && quoteStack.length > 0) {
             fetchQuote();
         }
-    }, [quote, quoteStack, prevQuotes]);
+    }, [quote, quoteStack]);
 
     useEffect(() => {
-        // ...
-
-        // 如果 prevQuotes 发生变化且长度大于0，更新 quote 状态
         if (prevQuotes.length > 0) {
             setQuote(prevQuotes[prevQuotes.length - 1]);
         }
-    }, [quote, quoteStack, prevQuotes]);
+    }, [prevQuotes]);
 
 
     // 检查对象是否为空
