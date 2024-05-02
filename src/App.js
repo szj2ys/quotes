@@ -83,7 +83,7 @@ function App() {
         if (prevQuotes.length > 0) {
             setQuote(prevQuotes[prevQuotes.length - 1]);
         }
-    }, [prevQuotes]);
+    }, [quote, quoteStack, prevQuotes]);
 
 
     // 检查对象是否为空
@@ -132,7 +132,6 @@ function App() {
             updatedPrevQuotes.splice(prevQuotes.length - 1, 1);
             setPrevQuotes(updatedPrevQuotes);
         }
-
     };
 
 
@@ -182,6 +181,7 @@ function App() {
             className="content-wrapper"
             {...swipeHandlers} // 传递滑动事件处理器
             onDoubleClick={handleDoubleClick} // 双击事件
+            onKeyDown={handleKeyDown}
             tabIndex="0" // 允许div接收键盘焦点
         >
             {/* 名言展示内容 */}
