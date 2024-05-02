@@ -171,46 +171,39 @@ function App() {
         onSwipedRight: () => getPreviousQuote(), // 向右滑动切换名言
         preventDefaultTouchmoveEvent: true, // 阻止默认的触摸移动事件
         trackMouse: false, // 跟踪鼠标事件
-        delta: 88, // 触发滑动的最小移动距离
+        delta: 66, // 触发滑动的最小移动距离
         preventScrollOnSwipe: false, // 不阻止滑动时的页面滚动
     });
 
-    // 渲染UI
     return (
         <div
             className="content-wrapper"
-            {...swipeHandlers} // 传递滑动事件处理器
-            onDoubleClick={handleDoubleClick} // 双击事件
+            {...swipeHandlers}
+            onDoubleClick={handleDoubleClick}
             onKeyDown={handleKeyDown}
             tabIndex="0" // 允许div接收键盘焦点
         >
-            {/* 名言展示内容 */}
             <>
                 <pre ref={preRef} key={quote.quote}>{quote.quote}</pre>
-                {/* 名言内容 */}
-                <p key={quote.author}>- {quote.author}</p> {/* 作者 */}
-                {/* 复制到剪贴板按钮 */}
+                <p key={quote.author}>- {quote.author}</p>
                 <CopyToClipboard
-                    text={`${quote.quote} ${quote.author ? `- ${quote.author}` : ''}`} // 复制的内容
+                    text={`${quote.quote} ${quote.author ? `- ${quote.author}` : ''}`}
                     onCopy={() => {
                         setCopied(true);
-                        setTimeout(() => setCopied(false), 2000); // 复制成功提示
+                        setTimeout(() => setCopied(false), 2000);
                     }}
                 >
                     <button className="copy-button" aria-label="Copy Quote">
-                        <FiCopy size={35}/> {/* 复制图标 */}
+                        <FiCopy size={35}/>
                     </button>
                 </CopyToClipboard>
                 {copied && <span
-                    className="copied-message">Copied!</span>} {/* 复制成功提示 */}
+                    className="copied-message">Copied!</span>}
             </>
         </div>
     );
 }
 
-// 导出App组件
 export default App;
-
-
 
 
