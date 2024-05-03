@@ -36,13 +36,13 @@
 /* 移动设备背景图片 */
 @media screen and (max-width: 768px) {
   .content-wrapper {
-    background-image: url('./img/background4.jpg');
+    background-image: url('./img/appbackground1.jpg');
   }
 }
 
 @media screen and (max-width: 480px) {
   .content-wrapper {
-    background-image: url('./img/background4.jpg');
+    background-image: url('./img/appbackground1.jpg');
   }
 }
 
