@@ -33,6 +33,7 @@
     user-select: none; /* 禁用双击选中文本 */
 }
 
+
 /* 移动设备背景图片 */
 @media screen and (max-width: 768px) {
   .content-wrapper {
@@ -79,8 +80,9 @@ p {
     letter-spacing: 3px;
     transform: skew(-10deg);
     text-shadow: 3px 3px 6px rgba(0, 0, 0, 0.5);
-    text-align: justify-all;
-    margin-left: 24%;
+    text-align: center;
+    padding-left: 18%;
+    max-width: 99%;
     animation: fadeIn 0.6s ease-in-out;
 }
 
@@ -107,6 +109,7 @@ p {
     p {
         font-size: 24px;
         letter-spacing: 1px;
+        padding-left: 0%;
     }
 }
 
@@ -120,6 +123,7 @@ p {
     p {
         font-size: 23px;
         letter-spacing: 1px;
+        padding-left: 0%;
     }
 }
 

@@ -162,21 +162,28 @@ function App() {
         onSwipedRight: () => getPreviousQuote(), // 向右滑动切换名言
         preventDefaultTouchmoveEvent: true, // 阻止默认的触摸移动事件
         trackMouse: false, // 跟踪鼠标事件
-        delta: 66, // 触发滑动的最小移动距离
+        delta: 18, // 触发滑动的最小移动距离
         preventScrollOnSwipe: false, // 不阻止滑动时的页面滚动
     });
 
     return (
         <div
             className="content-wrapper"
-            {...swipeHandlers}
             onDoubleClick={handleDoubleClick}
             onKeyDown={handleKeyDown}
             tabIndex="0" // 允许div接收键盘焦点
         >
             <>
                 <pre ref={preRef} key={quote.quote}>{quote.quote}</pre>
-                <p key={quote.author}>- {quote.author}</p>
+                <p key={quote.author}
+                {...swipeHandlers}
+                >
+                    &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+                    &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+                    - {quote.author}
+                    &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+                </p>
+
                 <CopyToClipboard
                     text={`${quote.quote} ${quote.author ? `- ${quote.author}` : ''}`}
                     onCopy={() => {
@@ -196,5 +203,9 @@ function App() {
 }
 
 export default App;
+
+
+
+
 
 
