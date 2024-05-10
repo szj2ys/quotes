@@ -58,17 +58,19 @@ class TextCleaner:
         :param quote: 原始quote文本。
         :return: 清洗后的quote文本。
         """
-        quote = quote.replace(',', '，').replace(';','；').\
-            replace('?', '？').replace('!', '！').replace(':', '：').\
-            replace('"','”').replace('\\n', '\n').replace('；。', '。').\
+        quote = quote.replace(',', '，').replace(';', '；'). \
+            replace('?', '？').replace('!', '！').replace(':', '：'). \
+            replace('"', '”').replace('\\n', '\n').replace('；。', '。'). \
             replace('？。', '。').replace('(', '（').replace(')', '）')
+
         quote = self.convert_full_stop(quote)
         quote = ChineseConverter.convert(quote)
         # if any(c.isalpha() for c in quote if c.isascii()):
         #     # 检查quote是否包含字母
         #     print(quote)
 
-        return self.check_end_punctuation(quote.strip())
+        return self.check_end_punctuation(quote.strip())\
+            .replace('。NET', '.NET')
 
     def _update_author(self, author):
         """
