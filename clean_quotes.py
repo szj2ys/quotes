@@ -1,6 +1,23 @@
 import json, string
 from pathlib import Path
 from datetime import datetime
+from opencc import OpenCC
+
+
+class ChineseConverter:
+    """pip install opencc-python-reimplemented"""
+
+    def __init__(self, config='t2s'):
+        """
+        config：- t2s：繁体转简体
+                    - s2t：简体转繁体
+        """
+        self.converter = OpenCC(config)
+
+    @classmethod
+    def convert(cls, text):
+        """中文字体转换"""
+        return cls().converter.convert(text)
 
 
 class TextCleaner:
@@ -46,7 +63,7 @@ class TextCleaner:
             replace('"','”').replace('\\n', '\n').replace('；。', '。').\
             replace('？。', '。').replace('(', '（').replace(')', '）')
         quote = self.convert_full_stop(quote)
-
+        quote = ChineseConverter.convert(quote)
         # if any(c.isalpha() for c in quote if c.isascii()):
         #     # 检查quote是否包含字母
         #     print(quote)
