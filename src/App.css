@@ -80,7 +80,7 @@ p {
     letter-spacing: 3px;
     transform: skew(-10deg);
     text-shadow: 3px 3px 6px rgba(0, 0, 0, 0.5);
-    text-align: center;
+    text-align: justify-all;
     padding-left: 18%;
     max-width: 99%;
     animation: fadeIn 0.6s ease-in-out;
