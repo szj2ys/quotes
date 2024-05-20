@@ -41,7 +41,7 @@ class TextCleaner:
 
     def check_end_punctuation(self, text):
         """检查是否以标点结尾"""
-        chinese_period = ['。', '！', '？']
+        chinese_period = ['。', '！', '？', '”']
 
         # 判断是否以标点符号结尾
         if text and (
@@ -70,7 +70,7 @@ class TextCleaner:
         #     print(quote)
 
         return self.check_end_punctuation(quote.strip())\
-            .replace('。NET', '.NET')
+            .replace('。NET', '.NET').replace('。”。', '。”')
 
     def _update_author(self, author):
         """
