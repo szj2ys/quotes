@@ -178,10 +178,9 @@ function App() {
                 <p key={quote.author}
                 {...swipeHandlers}
                 >
-                    &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
-                    &nbsp;&nbsp;&nbsp;&nbsp;
+                    &ensp;&ensp;&ensp;&ensp;&ensp;&ensp;
                     - {quote.author}
-                    &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+                    &ensp;&ensp;&ensp;&ensp;&ensp;
                 </p>
 
                 <CopyToClipboard
