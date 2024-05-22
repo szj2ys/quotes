@@ -178,7 +178,7 @@ function App() {
                 <p key={quote.author}
                 {...swipeHandlers}
                 >
-                    &ensp;&ensp;&ensp;&ensp;&ensp;&ensp;
+                    &ensp;&ensp;&ensp;&ensp;&ensp;&ensp;&ensp;&ensp;&ensp;
                     - {quote.author}
                     &ensp;&ensp;&ensp;&ensp;&ensp;
                 </p>
