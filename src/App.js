@@ -166,6 +166,9 @@ function App() {
         preventScrollOnSwipe: false, // 不阻止滑动时的页面滚动
     });
 
+    const calculateLeftSpaces = (authorLength) => `\u2002`.repeat(16 - authorLength);
+    const calculateRightSpaces = (authorLength) => `\u2002`.repeat(12 - authorLength);
+
     return (
         <div
             className="content-wrapper"
@@ -176,11 +179,11 @@ function App() {
             <>
                 <pre ref={preRef} key={quote.quote}>{quote.quote}</pre>
                 <p key={quote.author}
-                {...swipeHandlers}
+                   {...swipeHandlers}
                 >
-                    &ensp;&ensp;&ensp;&ensp;&ensp;&ensp;&ensp;&ensp;&ensp;
+                    {quote.author && calculateLeftSpaces(quote.author.length)}
                     - {quote.author}
-                    &ensp;&ensp;&ensp;&ensp;&ensp;
+                    {quote.author && calculateRightSpaces(quote.author.length)}
                 </p>
 
                 <CopyToClipboard
@@ -202,8 +205,6 @@ function App() {
 }
 
 export default App;
-
-
 
 
 
