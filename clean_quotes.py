@@ -2,7 +2,7 @@ import json, string
 from pathlib import Path
 from datetime import datetime
 from opencc import OpenCC
-
+import re
 
 class ChineseConverter:
     """pip install opencc-python-reimplemented"""
@@ -62,7 +62,7 @@ class TextCleaner:
             replace('?', '？').replace('!', '！').replace(':', '：'). \
             replace('"', '”').replace('\\n', '\n').replace('；。', '。'). \
             replace('？。', '。').replace('(', '（').replace(')', '）')
-
+        quote = re.sub(r'[\u2460-\u24FF]', '', quote)
         quote = self.convert_full_stop(quote)
         quote = ChineseConverter.convert(quote)
         # if any(c.isalpha() for c in quote if c.isascii()):
