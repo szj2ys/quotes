@@ -30,8 +30,8 @@ function App() {
         }
         preElement.style.marginLeft = `${marginLeftPercentage}%`;
     };
-    const calculateLeftSpaces = (authorLength) => `\u2002`.repeat(16 - authorLength);
-    const calculateRightSpaces = (authorLength) => `\u2002`.repeat(12 - authorLength);
+    const calculateLeftSpaces = (authorLength) => `\u2002`.repeat(13 - authorLength);
+    const calculateRightSpaces = (authorLength) => `\u2002`.repeat(11 - authorLength);
 
 
     useEffect(() => {
