@@ -26,7 +26,7 @@ function App() {
         if (isMobile) {
             marginLeftPercentage = ((containerWidth - preWidth) / 4 / containerWidth) * 100;
         } else {
-            marginLeftPercentage = ((containerWidth - preWidth) / 88 / containerWidth) * 100;
+            marginLeftPercentage = ((containerWidth - preWidth) / 8 / containerWidth) * 100;
         }
         preElement.style.marginLeft = `${marginLeftPercentage}%`;
     };
