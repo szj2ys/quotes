@@ -30,8 +30,25 @@ function App() {
         }
         preElement.style.marginLeft = `${marginLeftPercentage}%`;
     };
-    const calculateLeftSpaces = (authorLength) => `\u2002`.repeat(13 - authorLength);
-    const calculateRightSpaces = (authorLength) => `\u2002`.repeat(11 - authorLength);
+    // const calculateLeftSpaces = (authorLength) => `\u2002`.repeat(13 - authorLength);
+    // const calculateRightSpaces = (authorLength) => `\u2002`.repeat(11 - authorLength);
+
+
+    const calculateLeftSpaces = (authorLength) => {
+        const screenWidth = window.innerWidth;
+        const charWidth = screenWidth / 26;
+        const totalCharCapacity = Math.floor(screenWidth / charWidth);
+        const leftSpaces = Math.floor((totalCharCapacity / 1.8 - authorLength));
+        return `\u2002`.repeat(leftSpaces);
+    };
+
+    const calculateRightSpaces = (authorLength) => {
+        const screenWidth = window.innerWidth;
+        const charWidth = screenWidth / 26;
+        const totalCharCapacity = Math.floor(screenWidth / charWidth);
+        const leftSpaces = Math.floor((totalCharCapacity / 2.6 - authorLength));
+        return `\u2002`.repeat(leftSpaces);
+    };
 
 
     useEffect(() => {
@@ -206,7 +223,5 @@ function App() {
 }
 
 export default App;
-
-
 
 

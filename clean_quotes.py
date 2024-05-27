@@ -39,6 +39,21 @@ class TextCleaner:
         with self.input_file.open(encoding='utf-8') as file:
             return json.load(file)
 
+    @staticmethod
+    def format_comma(text):
+        new_text = ""
+        for i in range(len(text)):
+            if text[i] == ',':
+                before_wd = text[i - 1]
+                if i > 0 and before_wd.isdigit() or before_wd in string.ascii_lowercase + string.ascii_uppercase:
+                    new_text += text[i]
+                else:
+                    # 如果逗号前的字符存在并且不是数字或字母，则替换
+                    new_text += '，'
+            else:
+                new_text += text[i]
+        return new_text
+
     def check_end_punctuation(self, text):
         """检查是否以标点结尾"""
         chinese_period = ['。', '！', '？', '”']
@@ -58,12 +73,13 @@ class TextCleaner:
         :param quote: 原始quote文本。
         :return: 清洗后的quote文本。
         """
-        quote = quote.replace(',', '，').replace(';', '；'). \
+        quote = quote.replace(';', '；'). \
             replace('?', '？').replace('!', '！').replace(':', '：'). \
             replace('"', '”').replace('\\n', '\n').replace('；。', '。'). \
             replace('？。', '。').replace('(', '（').replace(')', '）')
         quote = re.sub(r'[\u2460-\u24FF]', '', quote)
         quote = self.convert_full_stop(quote)
+        quote = self.format_comma(quote)
         quote = ChineseConverter.convert(quote)
         # if any(c.isalpha() for c in quote if c.isascii()):
         #     # 检查quote是否包含字母
