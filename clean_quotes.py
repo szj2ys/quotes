@@ -4,6 +4,7 @@ from datetime import datetime
 from opencc import OpenCC
 import re
 
+
 class ChineseConverter:
     """pip install opencc-python-reimplemented"""
 
@@ -56,12 +57,12 @@ class TextCleaner:
 
     def check_end_punctuation(self, text):
         """检查是否以标点结尾"""
-        chinese_period = ['。', '！', '？', '”']
+        chinese_puncts = ['。', '！', '？', '”']
 
         # 判断是否以标点符号结尾
         if text and (
                 text[-1] not in string.punctuation and (
-                text[-1] not in chinese_period)):
+                text[-1] not in chinese_puncts)):
             return text + '。'
         else:
             return text
@@ -85,7 +86,7 @@ class TextCleaner:
         #     # 检查quote是否包含字母
         #     print(quote)
 
-        return self.check_end_punctuation(quote.strip())\
+        return self.check_end_punctuation(quote.strip()) \
             .replace('。NET', '.NET').replace('。”。', '。”')
 
     def _update_author(self, author):
@@ -103,11 +104,18 @@ class TextCleaner:
     def convert_full_stop(self, text):
         result = ""
         for i in range(len(text)):
+
             if text[i] == '.':
-                if i == 0 or not text[i - 1].isdigit():
+                if i == 0:
+                    result += text[i]
+                elif text[i - 1] == '.' or text[i + 1] == '.':
+                    # 处理省略号的情况
+                    result += text[i]
+                elif not text[i - 1].isdigit() and not text[
+                                                           i - 1] in string.ascii_lowercase + string.ascii_uppercase:
                     result += '。'
                 else:
-                    result += '.'
+                    result += text[i]
             else:
                 result += text[i]
         return result
