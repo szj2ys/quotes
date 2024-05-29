@@ -108,11 +108,13 @@ class TextCleaner:
             if text[i] == '.':
                 if i == 0:
                     result += text[i]
-                elif text[i - 1] == '.' or text[i + 1] == '.':
+                elif i < len(text) - 1 and (
+                        text[i - 1] == '.' or text[i + 1] == '.'):
                     # 处理省略号的情况
                     result += text[i]
-                elif not text[i - 1].isdigit() and not text[
-                                                           i - 1] in string.ascii_lowercase + string.ascii_uppercase:
+                elif not text[i - 1].isdigit() \
+                        and not text[i - 1] == '.' \
+                        and not text[i - 1] in string.ascii_lowercase + string.ascii_uppercase:
                     result += '。'
                 else:
                     result += text[i]
