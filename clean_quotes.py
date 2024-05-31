@@ -3,6 +3,7 @@ from pathlib import Path
 from datetime import datetime
 from opencc import OpenCC
 import re
+import pyperclip
 
 
 class ChineseConverter:
@@ -150,7 +151,8 @@ class TextCleaner:
         print(f'总共有{len(self.data)}条数据...')
         with output_file.open('w', encoding='utf-8') as file:
             json.dump(self.data, file, ensure_ascii=False, indent=4)
-
+        quotes = "\n\n\n\n".join(set(d["quote"] for d in self.data))
+        pyperclip.copy(quotes)
 
 if __name__ == "__main__":
     cleaner = TextCleaner('src/assets/quotes.json')  # 输入文件名
