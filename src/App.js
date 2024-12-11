@@ -200,7 +200,7 @@ function App() {
                    {...swipeHandlers}
                 >
                     {quote.author && calculateLeftSpaces(quote.author.length)}
-                    - {quote.author}
+                    ~ {quote.author}
                     {quote.author && calculateRightSpaces(quote.author.length)}
                 </p>
 
