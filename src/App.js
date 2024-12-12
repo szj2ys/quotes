@@ -200,12 +200,12 @@ function App() {
                    {...swipeHandlers}
                 >
                     {quote.author && calculateLeftSpaces(quote.author.length)}
-                    ~ {quote.author}
+                    ~{quote.author}
                     {quote.author && calculateRightSpaces(quote.author.length)}
                 </p>
 
                 <CopyToClipboard
-                    text={`${quote.quote} ${quote.author ? `- ${quote.author}` : ''}`}
+                    text={`${quote.quote} ${quote.author ? ` ~${quote.author}` : ''}`}
                     onCopy={() => {
                         setCopied(true);
                         setTimeout(() => setCopied(false), 2000);
