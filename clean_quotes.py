@@ -98,8 +98,7 @@ class TextCleaner:
         :return: 更新后的author文本。
         """
         author = '佚名' if not author else author
-        if len(author) > 8:
-            print(author)
+
         return author.replace('・', '·').replace('•', '·').strip()
 
     def convert_full_stop(self, text):
