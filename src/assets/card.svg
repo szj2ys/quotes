@@ -1,47 +1,274 @@
-<svg width="800" height="400" xmlns="http://www.w3.org/2000/svg">
-    <!-- 背景 -->
-    <defs>
-        <linearGradient id="bg-gradient" x1="0%" y1="0%" x2="100%" y2="100%">
-            <stop offset="0%" style="stop-color:#f5f5f5;stop-opacity:1" />
-            <stop offset="100%" style="stop-color:#e5e5e5;stop-opacity:1" />
-        </linearGradient>
-    </defs>
-    <rect width="100%" height="100%" fill="url(#bg-gradient)" />
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 800 1120" width="800" height="1120">
+  <!-- 定义渐变和滤镜 -->
+  <defs>
+    <!-- 背景渐变 -->
+    <linearGradient id="bgGradient" x1="0%" y1="0%" x2="100%" y2="100%">
+      <stop offset="0%" stop-color="#0B1326" />
+      <stop offset="100%" stop-color="#1E0B26" />
+    </linearGradient>
 
-    <!-- 装饰边框 -->
-    <rect x="20" y="20" width="760" height="360"
-          fill="none"
-          stroke="#333"
-          stroke-width="2"
-          rx="10" />
+    <!-- 神经网络节点渐变 -->
+    <linearGradient id="nodeGradient" x1="0%" y1="0%" x2="100%" y2="100%">
+      <stop offset="0%" stop-color="#4776E6" />
+      <stop offset="100%" stop-color="#8E54E9" />
+    </linearGradient>
 
-    <!-- 水墨装饰 -->
-    <path d="M40 40 Q60 60, 40 80 T40 120"
-          stroke="#333"
-          stroke-width="2"
-          fill="none"
-          opacity="0.3" />
+    <!-- 参数线渐变 -->
+    <linearGradient id="lineGradient" x1="0%" y1="0%" x2="100%" y2="0%">
+      <stop offset="0%" stop-color="#4776E6" stop-opacity="0.2" />
+      <stop offset="50%" stop-color="#8E54E9" stop-opacity="0.8" />
+      <stop offset="100%" stop-color="#4776E6" stop-opacity="0.2" />
+    </linearGradient>
 
-    <!-- 主要文字 -->
-    <text x="400" y="160"
-          text-anchor="middle"
-          style="font-family: 'SimSun', serif; font-size: 28px; fill: #333;">
-        古之能致功名者，众人助之以力，
-    </text>
-    <text x="400" y="210"
-          text-anchor="middle"
-          style="font-family: 'SimSun', serif; font-size: 28px; fill: #333;">
-        近者结之以成，远者誉之以名，尊者载之以势。
-    </text>
+    <!-- 发光效果 -->
+    <filter id="glow" x="-20%" y="-20%" width="140%" height="140%">
+      <feGaussianBlur stdDeviation="5" result="blur" />
+      <feComposite in="SourceGraphic" in2="blur" operator="over" />
+    </filter>
 
-    <!-- 作者署名 -->
-    <text x="700" y="320"
-          text-anchor="end"
-          style="font-family: 'KaiTi', serif; font-size: 24px; fill: #666;">
-        — 韩非子
-    </text>
+    <!-- 数据流动画 -->
+    <linearGradient id="dataFlowGradient">
+      <stop offset="0%" stop-color="#4776E6" stop-opacity="0">
+        <animate attributeName="offset" values="0;1" dur="3s" repeatCount="indefinite" />
+      </stop>
+      <stop offset="20%" stop-color="#8E54E9" stop-opacity="0.8">
+        <animate attributeName="offset" values="0.2;1.2" dur="3s" repeatCount="indefinite" />
+      </stop>
+      <stop offset="40%" stop-color="#4776E6" stop-opacity="0">
+        <animate attributeName="offset" values="0.4;1.4" dur="3s" repeatCount="indefinite" />
+      </stop>
+    </linearGradient>
+  </defs>
 
-    <!-- 装饰点缀 -->
-    <circle cx="60" cy="60" r="3" fill="#333" opacity="0.5" />
-    <circle cx="740" cy="340" r="3" fill="#333" opacity="0.5" />
+  <!-- 背景 -->
+  <rect width="800" height="1120" fill="url(#bgGradient)" />
+
+  <!-- 背景网格 -->
+  <g opacity="0.15">
+    <path d="M0,100 L800,100" stroke="#FFFFFF" stroke-width="1" />
+    <path d="M0,200 L800,200" stroke="#FFFFFF" stroke-width="1" />
+    <path d="M0,300 L800,300" stroke="#FFFFFF" stroke-width="1" />
+    <path d="M0,400 L800,400" stroke="#FFFFFF" stroke-width="1" />
+    <path d="M0,500 L800,500" stroke="#FFFFFF" stroke-width="1" />
+    <path d="M0,600 L800,600" stroke="#FFFFFF" stroke-width="1" />
+    <path d="M0,700 L800,700" stroke="#FFFFFF" stroke-width="1" />
+    <path d="M0,800 L800,800" stroke="#FFFFFF" stroke-width="1" />
+    <path d="M0,900 L800,900" stroke="#FFFFFF" stroke-width="1" />
+    <path d="M0,1000 L800,1000" stroke="#FFFFFF" stroke-width="1" />
+
+    <path d="M100,0 L100,1120" stroke="#FFFFFF" stroke-width="1" />
+    <path d="M200,0 L200,1120" stroke="#FFFFFF" stroke-width="1" />
+    <path d="M300,0 L300,1120" stroke="#FFFFFF" stroke-width="1" />
+    <path d="M400,0 L400,1120" stroke="#FFFFFF" stroke-width="1" />
+    <path d="M500,0 L500,1120" stroke="#FFFFFF" stroke-width="1" />
+    <path d="M600,0 L600,1120" stroke="#FFFFFF" stroke-width="1" />
+    <path d="M700,0 L700,1120" stroke="#FFFFFF" stroke-width="1" />
+  </g>
+
+  <!-- 技术纹理装饰 -->
+  <g opacity="0.4">
+    <circle cx="100" cy="200" r="80" fill="none" stroke="#4776E6" stroke-width="1" />
+    <circle cx="700" cy="900" r="120" fill="none" stroke="#8E54E9" stroke-width="1" />
+    <path d="M50,120 Q400,50 750,180" fill="none" stroke="#4776E6" stroke-width="1" stroke-dasharray="5,5" />
+    <path d="M50,980 Q400,1050 750,950" fill="none" stroke="#8E54E9" stroke-width="1" stroke-dasharray="5,5" />
+  </g>
+
+  <!-- 中央神经网络图 -->
+  <g transform="translate(400, 560)" filter="url(#glow)">
+    <!-- 输入层 -->
+    <g transform="translate(-300, 0)">
+      <circle cx="0" cy="-160" r="15" fill="url(#nodeGradient)" />
+      <circle cx="0" cy="-80" r="15" fill="url(#nodeGradient)" />
+      <circle cx="0" cy="0" r="15" fill="url(#nodeGradient)" />
+      <circle cx="0" cy="80" r="15" fill="url(#nodeGradient)" />
+      <circle cx="0" cy="160" r="15" fill="url(#nodeGradient)" />
+
+      <text x="0" y="-200" text-anchor="middle" fill="white" font-family="'黑体', sans-serif" font-size="14">输入层</text>
+    </g>
+
+    <!-- 隐藏层1 -->
+    <g transform="translate(-150, 0)">
+      <circle cx="0" cy="-140" r="12" fill="url(#nodeGradient)" />
+      <circle cx="0" cy="-70" r="12" fill="url(#nodeGradient)" />
+      <circle cx="0" cy="0" r="12" fill="url(#nodeGradient)" />
+      <circle cx="0" cy="70" r="12" fill="url(#nodeGradient)" />
+      <circle cx="0" cy="140" r="12" fill="url(#nodeGradient)" />
+
+      <text x="0" y="-180" text-anchor="middle" fill="white" font-family="'黑体', sans-serif" font-size="14">隐藏层</text>
+    </g>
+
+    <!-- 主微调区域 -->
+    <g transform="translate(0, 0)">
+      <circle cx="0" cy="-150" r="20" fill="url(#nodeGradient)" stroke="#FFFFFF" stroke-width="2">
+        <animate attributeName="r" values="20;22;20" dur="2s" repeatCount="indefinite" />
+      </circle>
+      <circle cx="0" cy="-75" r="20" fill="url(#nodeGradient)" stroke="#FFFFFF" stroke-width="2">
+        <animate attributeName="r" values="20;18;20" dur="2.5s" repeatCount="indefinite" />
+      </circle>
+      <circle cx="0" cy="0" r="30" fill="url(#nodeGradient)" stroke="#FFFFFF" stroke-width="3">
+        <animate attributeName="r" values="30;33;30" dur="1.5s" repeatCount="indefinite" />
+      </circle>
+      <circle cx="0" cy="75" r="20" fill="url(#nodeGradient)" stroke="#FFFFFF" stroke-width="2">
+        <animate attributeName="r" values="20;18;20" dur="2.2s" repeatCount="indefinite" />
+      </circle>
+      <circle cx="0" cy="150" r="20" fill="url(#nodeGradient)" stroke="#FFFFFF" stroke-width="2">
+        <animate attributeName="r" values="20;22;20" dur="1.8s" repeatCount="indefinite" />
+      </circle>
+
+      <text x="0" y="-190" text-anchor="middle" fill="white" font-family="'黑体', sans-serif" font-size="18" font-weight="bold">微调层</text>
+    </g>
+
+    <!-- 隐藏层2 -->
+    <g transform="translate(150, 0)">
+      <circle cx="0" cy="-140" r="12" fill="url(#nodeGradient)" />
+      <circle cx="0" cy="-70" r="12" fill="url(#nodeGradient)" />
+      <circle cx="0" cy="0" r="12" fill="url(#nodeGradient)" />
+      <circle cx="0" cy="70" r="12" fill="url(#nodeGradient)" />
+      <circle cx="0" cy="140" r="12" fill="url(#nodeGradient)" />
+
+      <text x="0" y="-180" text-anchor="middle" fill="white" font-family="'黑体', sans-serif" font-size="14">隐藏层</text>
+    </g>
+
+    <!-- 输出层 -->
+    <g transform="translate(300, 0)">
+      <circle cx="0" cy="-100" r="15" fill="url(#nodeGradient)" />
+      <circle cx="0" cy="0" r="15" fill="url(#nodeGradient)" />
+      <circle cx="0" cy="100" r="15" fill="url(#nodeGradient)" />
+
+      <text x="0" y="-140" text-anchor="middle" fill="white" font-family="'黑体', sans-serif" font-size="14">输出层</text>
+    </g>
+
+    <!-- 连接线 - 输入层到隐藏层1 -->
+    <g opacity="0.6">
+      <!-- 从输入到隐藏层1的连接 -->
+      <path d="M-300,-160 L-150,-140" stroke="url(#dataFlowGradient)" stroke-width="1.5" />
+      <path d="M-300,-160 L-150,-70" stroke="url(#dataFlowGradient)" stroke-width="1.5" />
+      <path d="M-300,-160 L-150,0" stroke="url(#dataFlowGradient)" stroke-width="1.5" />
+      <path d="M-300,-80 L-150,-140" stroke="url(#dataFlowGradient)" stroke-width="1.5" />
+      <path d="M-300,-80 L-150,-70" stroke="url(#dataFlowGradient)" stroke-width="1.5" />
+      <path d="M-300,0 L-150,-70" stroke="url(#dataFlowGradient)" stroke-width="1.5" />
+      <path d="M-300,0 L-150,0" stroke="url(#dataFlowGradient)" stroke-width="1.5" />
+      <path d="M-300,0 L-150,70" stroke="url(#dataFlowGradient)" stroke-width="1.5" />
+      <path d="M-300,80 L-150,0" stroke="url(#dataFlowGradient)" stroke-width="1.5" />
+      <path d="M-300,80 L-150,70" stroke="url(#dataFlowGradient)" stroke-width="1.5" />
+      <path d="M-300,160 L-150,70" stroke="url(#dataFlowGradient)" stroke-width="1.5" />
+      <path d="M-300,160 L-150,140" stroke="url(#dataFlowGradient)" stroke-width="1.5" />
+
+      <!-- 从隐藏层1到微调层的连接 -->
+      <path d="M-150,-140 L0,-150" stroke="url(#dataFlowGradient)" stroke-width="2" />
+      <path d="M-150,-140 L0,-75" stroke="url(#dataFlowGradient)" stroke-width="2" />
+      <path d="M-150,-70 L0,-150" stroke="url(#dataFlowGradient)" stroke-width="2" />
+      <path d="M-150,-70 L0,-75" stroke="url(#dataFlowGradient)" stroke-width="2" />
+      <path d="M-150,-70 L0,0" stroke="url(#dataFlowGradient)" stroke-width="2" />
+      <path d="M-150,0 L0,-75" stroke="url(#dataFlowGradient)" stroke-width="2" />
+      <path d="M-150,0 L0,0" stroke="url(#dataFlowGradient)" stroke-width="2" />
+      <path d="M-150,0 L0,75" stroke="url(#dataFlowGradient)" stroke-width="2" />
+      <path d="M-150,70 L0,0" stroke="url(#dataFlowGradient)" stroke-width="2" />
+      <path d="M-150,70 L0,75" stroke="url(#dataFlowGradient)" stroke-width="2" />
+      <path d="M-150,140 L0,75" stroke="url(#dataFlowGradient)" stroke-width="2" />
+      <path d="M-150,140 L0,150" stroke="url(#dataFlowGradient)" stroke-width="2" />
+
+      <!-- 从微调层到隐藏层2的连接 -->
+      <path d="M0,-150 L150,-140" stroke="url(#dataFlowGradient)" stroke-width="2" />
+      <path d="M0,-150 L150,-70" stroke="url(#dataFlowGradient)" stroke-width="2" />
+      <path d="M0,-75 L150,-140" stroke="url(#dataFlowGradient)" stroke-width="2" />
+      <path d="M0,-75 L150,-70" stroke="url(#dataFlowGradient)" stroke-width="2" />
+      <path d="M0,-75 L150,0" stroke="url(#dataFlowGradient)" stroke-width="2" />
+      <path d="M0,0 L150,-70" stroke="url(#dataFlowGradient)" stroke-width="2" />
+      <path d="M0,0 L150,0" stroke="url(#dataFlowGradient)" stroke-width="2" />
+      <path d="M0,0 L150,70" stroke="url(#dataFlowGradient)" stroke-width="2" />
+      <path d="M0,75 L150,0" stroke="url(#dataFlowGradient)" stroke-width="2" />
+      <path d="M0,75 L150,70" stroke="url(#dataFlowGradient)" stroke-width="2" />
+      <path d="M0,150 L150,70" stroke="url(#dataFlowGradient)" stroke-width="2" />
+      <path d="M0,150 L150,140" stroke="url(#dataFlowGradient)" stroke-width="2" />
+
+      <!-- 从隐藏层2到输出层的连接 -->
+      <path d="M150,-140 L300,-100" stroke="url(#dataFlowGradient)" stroke-width="1.5" />
+      <path d="M150,-70 L300,-100" stroke="url(#dataFlowGradient)" stroke-width="1.5" />
+      <path d="M150,-70 L300,0" stroke="url(#dataFlowGradient)" stroke-width="1.5" />
+      <path d="M150,0 L300,-100" stroke="url(#dataFlowGradient)" stroke-width="1.5" />
+      <path d="M150,0 L300,0" stroke="url(#dataFlowGradient)" stroke-width="1.5" />
+      <path d="M150,0 L300,100" stroke="url(#dataFlowGradient)" stroke-width="1.5" />
+      <path d="M150,70 L300,0" stroke="url(#dataFlowGradient)" stroke-width="1.5" />
+      <path d="M150,70 L300,100" stroke="url(#dataFlowGradient)" stroke-width="1.5" />
+      <path d="M150,140 L300,100" stroke="url(#dataFlowGradient)" stroke-width="1.5" />
+    </g>
+  </g>
+
+  <!-- 微调参数可视化 -->
+  <g transform="translate(150, 260)">
+    <rect x="0" y="0" width="500" height="80" rx="5" fill="rgba(30, 11, 38, 0.7)" stroke="#4776E6" stroke-width="1" />
+
+    <text x="250" y="25" text-anchor="middle" fill="white" font-family="'黑体', sans-serif" font-size="16">参数微调进度</text>
+
+    <line x1="50" y1="50" x2="450" y2="50" stroke="#333" stroke-width="2" />
+
+    <circle cx="80" cy="50" r="5" fill="#4776E6">
+      <animate attributeName="cx" values="80;420;80" dur="10s" repeatCount="indefinite" />
+    </circle>
+    <circle cx="150" cy="50" r="5" fill="#8E54E9">
+      <animate attributeName="cx" values="150;420;150" dur="12s" repeatCount="indefinite" />
+    </circle>
+    <circle cx="220" cy="50" r="5" fill="#4776E6">
+      <animate attributeName="cx" values="220;420;220" dur="15s" repeatCount="indefinite" />
+    </circle>
+    <circle cx="290" cy="50" r="5" fill="#8E54E9">
+      <animate attributeName="cx" values="290;420;290" dur="11s" repeatCount="indefinite" />
+    </circle>
+    <circle cx="360" cy="50" r="5" fill="#4776E6">
+      <animate attributeName="cx" values="360;420;360" dur="13s" repeatCount="indefinite" />
+    </circle>
+  </g>
+
+  <!-- 损失函数图表 -->
+  <g transform="translate(150, 350)">
+    <rect x="0" y="0" width="500" height="150" rx="5" fill="rgba(30, 11, 38, 0.7)" stroke="#4776E6" stroke-width="1" />
+
+    <text x="250" y="25" text-anchor="middle" fill="white" font-family="'黑体', sans-serif" font-size="16">损失函数优化</text>
+
+    <line x1="50" y1="120" x2="450" y2="120" stroke="#FFFFFF" stroke-width="1" />
+    <line x1="50" y1="40" x2="50" y2="120" stroke="#FFFFFF" stroke-width="1" />
+
+    <text x="40" y="40" text-anchor="end" fill="white" font-family="'黑体', sans-serif" font-size="10">高</text>
+    <text x="40" y="120" text-anchor="end" fill="white" font-family="'黑体', sans-serif" font-size="10">低</text>
+    <text x="50" y="135" text-anchor="middle" fill="white" font-family="'黑体', sans-serif" font-size="10">0</text>
+    <text x="450" y="135" text-anchor="middle" fill="white" font-family="'黑体', sans-serif" font-size="10">迭代次数</text>
+
+    <path d="M50,50 C100,80 150,55 200,90 S250,70 300,80 S350,90 400,110 S450,115 450,115" fill="none" stroke="#8E54E9" stroke-width="3" />
+
+    <circle cx="50" cy="50" r="3" fill="#FFFFFF" />
+    <circle cx="450" cy="115" r="3" fill="#FFFFFF" />
+  </g>
+
+  <!-- 标题和副标题 -->
+  <g transform="translate(400, 140)">
+    <text x="0" y="0" text-anchor="middle" fill="white" font-family="'黑体', sans-serif" font-size="50" font-weight="bold">大模型微调过程</text>
+    <text x="0" y="50" text-anchor="middle" fill="#8E54E9" font-family="'黑体', sans-serif" font-size="24">从预训练到定制化应用</text>
+  </g>
+
+  <!-- 下方信息区 -->
+  <g transform="translate(400, 920)">
+    <rect x="-320" y="0" width="640" height="100" rx="10" fill="rgba(11, 19, 38, 0.7)" stroke="#4776E6" stroke-width="1" />
+
+    <text x="0" y="30" text-anchor="middle" fill="white" font-family="'黑体', sans-serif" font-size="18" font-weight="bold">微调技术优势</text>
+
+    <text x="-300" y="60" fill="white" font-family="'黑体', sans-serif" font-size="16">• 更低的计算资源需求</text>
+    <text x="-300" y="85" fill="white" font-family="'黑体', sans-serif" font-size="16">• 针对特定任务的优化性能</text>
+
+    <text x="100" y="60" fill="white" font-family="'黑体', sans-serif" font-size="16">• 减少灾难性遗忘</text>
+    <text x="100" y="85" fill="white" font-family="'黑体', sans-serif" font-size="16">• 快速适应新领域知识</text>
+  </g>
+
+  <!-- 底部署名 -->
+  <g transform="translate(400, 1070)">
+    <text x="0" y="0" text-anchor="middle" fill="white" font-family="'黑体', sans-serif" font-size="14" opacity="0.7">AI技术研究中心 © 2025</text>
+  </g>
+
+  <!-- 装饰性元素 -->
+  <g opacity="0.2">
+    <circle cx="100" cy="100" r="50" fill="none" stroke="#4776E6" stroke-width="1" />
+    <circle cx="700" cy="1020" r="40" fill="none" stroke="#8E54E9" stroke-width="1" />
+    <path d="M0,400 C200,350 600,450 800,400" fill="none" stroke="#4776E6" stroke-width="1" />
+    <path d="M0,800 C200,850 600,750 800,800" fill="none" stroke="#8E54E9" stroke-width="1" />
+  </g>
 </svg>

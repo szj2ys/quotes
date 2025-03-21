@@ -14,42 +14,49 @@ function App() {
     const [quoteStack, setQuoteStack] = useState([...quotes]); // 剩余未展示的名言栈
     const [prevQuotes, setPrevQuotes] = useState([]); // 已展示过的名言列表
     const [copied, setCopied] = useState(false); // 是否已复制到剪贴板的状态
-    const isMobile = /iPhone|iPad|iPod|Android/i.test(navigator.userAgent); // 判断是否为移动设备
     const preRef = useRef(null);
 
-    // 将 calculateMargin 函数移到 useEffect 外部
-    const calculateMargin = () => {
+    // 使用 useMemo 优化设备检测
+    const isMobile = React.useMemo(() => 
+        /iPhone|iPad|iPod|Android/i.test(navigator.userAgent), 
+        []
+    );
+
+    // 合并空格计算逻辑为一个函数
+    const calculateSpaces = React.useCallback((authorLength, ratio) => {
+        const screenWidth = window.innerWidth;
+        const charWidth = screenWidth / 26;
+        const totalCharCapacity = Math.floor(screenWidth / charWidth);
+        const spaces = Math.floor((totalCharCapacity / ratio - authorLength));
+        return `\u2002`.repeat(Math.max(0, spaces));
+    }, []);
+
+    // 优化 margin 计算
+    const calculateMargin = React.useCallback(() => {
+        if (!preRef.current) return;
         const preElement = preRef.current;
         const containerWidth = preElement.parentElement.clientWidth;
         const preWidth = preElement.clientWidth;
-        let marginLeftPercentage;
-        if (isMobile) {
-            marginLeftPercentage = ((containerWidth - preWidth) / 4 / containerWidth) * 100;
-        } else {
-            marginLeftPercentage = ((containerWidth - preWidth) / 8 / containerWidth) * 100;
-        }
-        preElement.style.marginLeft = `${marginLeftPercentage}%`;
-    };
-    // const calculateLeftSpaces = (authorLength) => `\u2002`.repeat(13 - authorLength);
-    // const calculateRightSpaces = (authorLength) => `\u2002`.repeat(11 - authorLength);
+        const divisor = isMobile ? 4 : 8;
+        const marginLeftPercentage = ((containerWidth - preWidth) / divisor / containerWidth) * 100;
+        preElement.style.marginLeft = `${Math.max(0, marginLeftPercentage)}%`;
+    }, [isMobile]);
 
+    // 优化事件处理函数
+    const handleKeyDown = React.useCallback((event) => {
+        if (event.target.closest('.copy-button')) return;
+        
+        const keyActions = {
+            'ArrowUp': getPreviousQuote,
+            'ArrowLeft': getPreviousQuote,
+            'Space': fetchQuote,
+            'ArrowDown': fetchQuote,
+            'ArrowRight': fetchQuote
+        };
 
-    const calculateLeftSpaces = (authorLength) => {
-        const screenWidth = window.innerWidth;
-        const charWidth = screenWidth / 26;
-        const totalCharCapacity = Math.floor(screenWidth / charWidth);
-        const leftSpaces = Math.floor((totalCharCapacity / 1.8 - authorLength));
-        return `\u2002`.repeat(leftSpaces);
-    };
-
-    const calculateRightSpaces = (authorLength) => {
-        const screenWidth = window.innerWidth;
-        const charWidth = screenWidth / 26;
-        const totalCharCapacity = Math.floor(screenWidth / charWidth);
-        const leftSpaces = Math.floor((totalCharCapacity / 2.6 - authorLength));
-        return `\u2002`.repeat(leftSpaces);
-    };
-
+        const action = keyActions[event.code];
+        if (action) action();
+    }, []);
 
     useEffect(() => {
         initializeQuotes();
@@ -146,22 +153,6 @@ function App() {
     };
 
 
-    // 键盘事件处理，用于切换名言
-    const handleKeyDown = (event) => {
-        const isCopyButton = event.target.closest('.copy-button');
-        if (!isCopyButton) {
-            const allowedKeys = ['Space', 'ArrowUp', 'ArrowDown', 'ArrowLeft', 'ArrowRight'];
-            const goPrevioiusQuoteKeys = ['ArrowUp', 'ArrowLeft'];
-            if (allowedKeys.includes(event.code)) {
-                if (goPrevioiusQuoteKeys.includes(event.code)) {
-                    getPreviousQuote();
-                } else {
-                    fetchQuote();
-                }
-            }
-        }
-    };
-
     // 双击事件处理，切换名言
     const handleDoubleClick = (event) => {
         fetchQuote();
@@ -190,33 +181,30 @@ function App() {
     return (
         <div
             className="content-wrapper"
-            onDoubleClick={handleDoubleClick}
-            onKeyDown={handleKeyDown}
+            onDoubleClick={isMobile ? handleDoubleClick : undefined}
+            onKeyDown={!isMobile ? handleKeyDown : undefined}
             tabIndex="0" // 允许div接收键盘焦点
         >
             <>
                 <pre ref={preRef} key={quote.quote}>{quote.quote}</pre>
-                <p key={quote.author}
-                   {...swipeHandlers}
-                >
-                    {quote.author && calculateLeftSpaces(quote.author.length)}
+                <p key={quote.author} {...swipeHandlers}>
+                    {quote.author && calculateSpaces(quote.author.length, 1.8)}
                     ~{quote.author}
-                    {quote.author && calculateRightSpaces(quote.author.length)}
+                    {quote.author && calculateSpaces(quote.author.length, 2.6)}
                 </p>
 
                 <CopyToClipboard
-                    text={`${quote.quote} ${quote.author ? ` ~${quote.author}` : ''}`}
+                    text={`${quote.quote}${quote.author ? ` ~${quote.author}` : ''}`}
                     onCopy={() => {
                         setCopied(true);
                         setTimeout(() => setCopied(false), 2000);
                     }}
                 >
                     <button className="copy-button" aria-label="Copy Quote">
-                        <FiCopy size={35}/>
+                        <FiCopy size={35} />
                     </button>
                 </CopyToClipboard>
-                {copied && <span
-                    className="copied-message">Copied!</span>}
+                {copied && <span className="copied-message">已复制!</span>}
             </>
         </div>
     );
