@@ -104,9 +104,9 @@ class QuotesSaver:
                 author = item.get('author', '')
                 if quote:
                     if '佚名' in author:
-                        file.write(f"{quote}\n\n")
+                        file.write(f"{quote}\n\n\n")
                     else:
-                        file.write(f"{quote}\n\n--{author}\n\n")
+                        file.write(f"{quote}\n--{author}\n\n\n")
 
         print(f"All quotes saved to: {file_path}")
 
