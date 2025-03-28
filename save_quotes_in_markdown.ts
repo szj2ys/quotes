@@ -41,45 +41,6 @@ class QuotesSaver {
         return this.data;
     }
 
-    public save_quotes(output_dir: string): void {
-        /**
-         * 遍历this.data并将每个引用保存到单独的Markdown文件中。
-         *
-         * @param output_dir 输出目录的路径。
-         */
-        const output_path = path.resolve(output_dir);
-        fs.mkdirSync(output_path, {recursive: true});
-
-        for (const item of this.data) {
-            const quote = item.quote || '';
-            const author = item.author || '';
-            if (quote) {
-                const filename = 'quotes_' + quote.slice(0, 12)
-                    .replace('。', '')
-                    .replace('；', '')
-                    .replace('：', '')
-                    .replace('[', '')
-                    .replace(']', '')
-                    .replace('.', '')
-                    .replace('《', '')
-                    .replace('》', '')
-                    .replace('"', '')
-                    .replace('"', '')
-                    .replace('，', '')
-                    .split(' ')
-                    .join('_') + '.md';
-
-                const file_path = path.join(output_path, filename);
-                const content = author.includes('佚名') ?
-                    `${quote}` :
-                    `${quote}\n\n--${author}`;
-
-                fs.writeFileSync(file_path, content, 'utf-8');
-                console.log(`Quote saved to: ${file_path}`);
-            }
-        }
-    }
-
 
     public async save_quotes_to_epub(output_dir: string, title: string = "温故知心", author: string = "尼古拉西格玛宋", shuffle: boolean = true): Promise<void> {
         /**
