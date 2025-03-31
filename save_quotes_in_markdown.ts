@@ -143,9 +143,7 @@ class QuotesSaver {
                     page-break-inside: avoid;
                 }
                 .quote {
-                    font-size: 1.2em;
-                    line-height: 1.5;
-                    margin-bottom: 0.5em;
+                    font-size: 1.0em;
                 }
                 .author {
                     text-align: right;
