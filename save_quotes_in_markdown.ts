@@ -146,6 +146,7 @@ class QuotesSaver {
                     font-size: 1.0em;
                 }
                 .author {
+                    font-size: 0.68em;
                     text-align: right;
                     font-style: italic;
                 }
