@@ -15,6 +15,10 @@ quote
 ```
 ```
 
+[web](https://szj2ys.github.io/quotes/)
+
+
+
 
 
 

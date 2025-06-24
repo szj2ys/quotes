@@ -7,7 +7,10 @@
 
 # testing
 /coverage
-
+pnpm-lock.toml
+quotes_to_epub.js
+uv.lock
+CopilotChatHistory.xml
 # production
 /build
 
