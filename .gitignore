@@ -4,7 +4,8 @@
 /node_modules
 /.pnp
 .pnp.js
-
+.next/
+.venv/
 # testing
 /coverage
 pnpm-lock.toml
