@@ -6,6 +6,7 @@
 .pnp.js
 .next/
 .venv/
+*.lock
 # testing
 /coverage
 pnpm-lock.toml
