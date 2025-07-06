@@ -118,7 +118,7 @@ class QuotesSaver {
         }
 
         // 准备封面图片路径
-        const cover_src = path.join('src', 'assets', 'cover.jpg');
+        const cover_src = path.join('public', 'cover.jpg');
         let coverPath = null;
 
         try {
@@ -169,7 +169,7 @@ async function main(): Promise<void> {
     const source_dir = path.join(homedir, 'Downloads', 'quotes');
     fs.mkdirSync(source_dir, {recursive: true});
 
-    const quotes_saver = new QuotesSaver('src/assets/quotes.json');
+    const quotes_saver = new QuotesSaver('public/quotes.json');
 
     // 保存为EPUB电子书
     try {

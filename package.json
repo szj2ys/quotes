@@ -1,52 +1,35 @@
 {
-  "name": "frontend",
+  "name": "quotes",
   "version": "0.1.0",
   "private": true,
-  "homepage": "https://szj2ys.github.io/quotes",
-  "dependencies": {
-    "@testing-library/jest-dom": "^5.17.0",
-    "@testing-library/react": "^13.4.0",
-    "@testing-library/user-event": "^13.5.0",
-    "axios": "^1.6.8",
-    "epub-gen": "^0.1.0",
-    "react": "^18.2.0",
-    "react-copy-to-clipboard": "^5.0.2",
-    "react-dom": "^18.2.0",
-    "react-icons": "^3.10.0",
-    "react-scripts": "5.0.1",
-    "react-swipeable": "^7.0.1",
-    "web-vitals": "^2.1.4"
-  },
   "scripts": {
-    "start": "react-scripts start",
-    "predeploy": "npm run build",
+    "dev": "next dev --turbopack",
+    "build": "next build",
+    "start": "next start",
     "deploy": "gh-pages -d build",
-    "build": "react-scripts build",
-    "test": "react-scripts test",
-    "eject": "react-scripts eject",
-    "epub": "tsc quotes_to_epub.ts && node quotes_to_epub.js"
+    "epub": "tsc quotes_to_epub.ts && node quotes_to_epub.js",
+    "lint": "next lint"
   },
-  "eslintConfig": {
-    "extends": [
-      "react-app",
-      "react-app/jest"
-    ]
-  },
-  "browserslist": {
-    "production": [
-      ">0.2%",
-      "not dead",
-      "not op_mini all"
-    ],
-    "development": [
-      "last 1 chrome version",
-      "last 1 firefox version",
-      "last 1 safari version"
-    ]
+  "dependencies": {
+    "@vercel/analytics": "^1.5.0",
+    "epub-gen": "^0.1.0",
+    "next": "15.3.5",
+    "next-contentlayer": "^0.3.4",
+    "next-themes": "^0.4.6",
+    "react": "^19.1.0",
+    "react-dom": "^19.0.0",
+    "react-icons": "^5.5.0",
+    "react-swipeable": "^7.0.2"
   },
   "devDependencies": {
-    "@types/fs-extra": "^11.0.4",
-    "gh-pages": "^6.1.1"
-  },
-  "packageManager": "pnpm@8.12.0+sha512.279278f83be782f6faaefbacbccc503301c4ec2cdafd40983e7c26aeeee7c38270f5c8e635b43464691b897abe1675b40c06df6edadde922532b7368aa9a5267"
+    "@eslint/eslintrc": "^3",
+    "@tailwindcss/postcss": "^4",
+    "@types/node": "^20",
+    "@types/react": "^19",
+    "@types/react-dom": "^19",
+    "eslint": "^9",
+    "eslint-config-next": "15.3.5",
+    "tailwindcss": "^4",
+    "typescript": "^5"
+  }
 }

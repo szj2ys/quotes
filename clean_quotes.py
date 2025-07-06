@@ -155,7 +155,7 @@ class TextCleaner:
         pyperclip.copy(quotes)
 
 if __name__ == "__main__":
-    cleaner = TextCleaner('src/assets/quotes.json')  # 输入文件名
+    cleaner = TextCleaner('public/quotes.json')  # 输入文件名
     cleaner.clean_data()
     cleaner.save_data()
     print('Well done!')
