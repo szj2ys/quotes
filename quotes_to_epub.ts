@@ -1,6 +1,6 @@
 import * as fs from 'fs';
 import * as path from 'path';
-import * as shutil from 'fs-extra';
+
 // Import epub-gen using require for compatibility
 const Epub = require('epub-gen');
 
@@ -40,7 +40,6 @@ class QuotesSaver {
         this.data.sort(() => Math.random() - 0.5);
         return this.data;
     }
-
 
     public async save_quotes_to_epub(output_dir: string, title: string = "温故知心", author: string = "尼古拉西格玛宋", shuffle: boolean = true): Promise<void> {
         /**
@@ -126,7 +125,9 @@ class QuotesSaver {
                 coverPath = cover_src;
             }
         } catch (error) {
-            console.log(`警告: 获取封面图片时出错: ${error.message}`);
+            // 修复类型错误：将 error 转换为 Error 类型
+            const err = error as Error;
+            console.log(`警告: 获取封面图片时出错: ${err.message}`);
         }
 
         // 创建EPUB选项
@@ -158,7 +159,9 @@ class QuotesSaver {
             await new Epub(options).promise;
             console.log(`EPUB电子书已保存至: ${epub_path}`);
         } catch (err) {
-            console.error(`生成EPUB时出错: ${err.message}`);
+            // 修复类型错误：将 err 转换为 Error 类型
+            const error = err as Error;
+            console.error(`生成EPUB时出错: ${error.message}`);
         }
     }
 }
@@ -176,13 +179,13 @@ async function main(): Promise<void> {
         await quotes_saver.save_quotes_to_epub(source_dir, "温故知心");
         console.log('well done!!!');
     } catch (error) {
-        console.error('生成EPUB失败:', error);
+        const err = error as Error;
+        console.error('生成EPUB失败:', err.message);
     }
 }
 
 // 执行主函数
 main().catch(error => {
-    console.error('程序执行出错:', error);
+    const err = error as Error;
+    console.error('程序执行出错:', err.message);
 });
-
-
