@@ -15,7 +15,7 @@ quotes_to_epub.js
 uv.lock
 CopilotChatHistory.xml
 # production
-/build
+
 
 # misc
 .DS_Store
