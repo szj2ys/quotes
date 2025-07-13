@@ -5,9 +5,10 @@
   "scripts": {
     "dev": "next dev --turbopack",
     "build": "next build",
-    "start": "npx serve build -s",
+    "start": "next start",
     "export": "next export",
     "deploy": "gh-pages -d build --dotfiles",
+    "deploy:vercel": "vercel --prod",
     "epub": "tsc quotes_to_epub.ts && node quotes_to_epub.js",
     "lint": "next lint"
   },
@@ -31,6 +32,7 @@
     "eslint": "^9",
     "eslint-config-next": "15.3.5",
     "tailwindcss": "^4",
-    "typescript": "^5"
+    "typescript": "^5",
+    "vercel": "^37.0.0"
   }
 }

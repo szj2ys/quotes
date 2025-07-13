@@ -1,11 +1,14 @@
 import type { NextConfig } from "next";
 
 const nextConfig: NextConfig = {
-  output: 'export',
-  distDir: 'build',
+  // Vercel deployment configuration
   trailingSlash: true,
   images: {
-    unoptimized: true
+    domains: [], // Add any external image domains if needed
+  },
+  // Enable experimental features if needed
+  experimental: {
+    // Add any experimental features here
   }
 };
 
