@@ -6,6 +6,7 @@ import { FiCopy } from 'react-icons/fi';
 import GlassBox from "@/components/glass-box";
 import LiquidDrop from "@/components/liquid-drop-box";
 
+
 // 定义名言的类型接口
 interface Quote {
   quote?: string;
